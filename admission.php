@@ -1,6 +1,7 @@
 <?php
 $page_title = 'Admission & Registration';
 require_once __DIR__ . '/includes/header.php';
+require_once __DIR__ . '/includes/db.php';
 
 // Simple simulated feedback logic
 $form_status = '';
@@ -12,7 +13,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dept = isset($_POST['student_dept']) ? htmlspecialchars($_POST['student_dept']) : '';
     
     if (!empty($name) && !empty($email) && !empty($phone) && !empty($dept)) {
-        $form_status = 'success';
+        if ($pdo) {
+            try {
+                $stmt = $pdo->prepare("INSERT INTO admissions (full_name, email, phone, department) VALUES (:name, :email, :phone, :dept)");
+                $stmt->execute([
+                    ':name' => $name,
+                    ':email' => $email,
+                    ':phone' => $phone,
+                    ':dept' => $dept
+                ]);
+                $form_status = 'success';
+            } catch (\PDOException $e) {
+                $form_status = 'error_db';
+                $db_error = $e->getMessage();
+            }
+        } else {
+            // Fallback simulated success
+            $form_status = 'success_simulated';
+        }
     } else {
         $form_status = 'error';
     }
@@ -89,7 +107,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Simulated alerts -->
     <?php if ($form_status === 'success'): ?>
         <div class="alert alert-success">
-            Thank you, <strong><?php echo $name; ?></strong>! Your inquiry for the <strong><?php echo $dept; ?></strong> program has been received. Check your email (<?php echo $email; ?>) for registration instructions.
+            Thank you, <strong><?php echo $name; ?></strong>! Your application for <strong><?php echo $dept; ?></strong> has been saved directly to the database. We will contact you soon.
+        </div>
+    <?php elseif ($form_status === 'success_simulated'): ?>
+        <div class="alert alert-success" style="background-color: #e2e8f0; border-color: #cbd5e0; color: #4a5568;">
+            <strong>[Offline Demo Mode]</strong> Thank you, <strong><?php echo $name; ?></strong>! Your inquiry for <strong><?php echo $dept; ?></strong> was validated successfully. (Connect to database to persist this).
+        </div>
+    <?php elseif ($form_status === 'error_db'): ?>
+        <div class="alert alert-error">
+            Database Error: Failed to save application. Details: <em><?php echo $db_error; ?></em>
         </div>
     <?php elseif ($form_status === 'error'): ?>
         <div class="alert alert-error">

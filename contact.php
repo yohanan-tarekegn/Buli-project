@@ -1,16 +1,35 @@
 <?php
 $page_title = 'Contact Us';
 require_once __DIR__ . '/includes/header.php';
+require_once __DIR__ . '/includes/db.php';
 
 // Simple simulated feedback logic
 $feedback_status = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sender_name = isset($_POST['contact_name']) ? htmlspecialchars($_POST['contact_name']) : '';
     $sender_email = isset($_POST['contact_email']) ? htmlspecialchars($_POST['contact_email']) : '';
+    $sender_subject = isset($_POST['contact_subject']) ? htmlspecialchars($_POST['contact_subject']) : '';
     $sender_msg = isset($_POST['contact_message']) ? htmlspecialchars($_POST['contact_message']) : '';
     
     if (!empty($sender_name) && !empty($sender_email) && !empty($sender_msg)) {
-        $feedback_status = 'success';
+        if ($pdo) {
+            try {
+                $stmt = $pdo->prepare("INSERT INTO contact_messages (name, email, subject, message) VALUES (:name, :email, :subject, :message)");
+                $stmt->execute([
+                    ':name' => $sender_name,
+                    ':email' => $sender_email,
+                    ':subject' => $sender_subject,
+                    ':message' => $sender_msg
+                ]);
+                $feedback_status = 'success';
+            } catch (\PDOException $e) {
+                $feedback_status = 'error_db';
+                $db_error = $e->getMessage();
+            }
+        } else {
+            // Fallback simulated success
+            $feedback_status = 'success_simulated';
+        }
     } else {
         $feedback_status = 'error';
     }
@@ -46,7 +65,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <?php if ($feedback_status === 'success'): ?>
             <div class="alert alert-success">
-                Thank you, <strong><?php echo $sender_name; ?></strong>! Your message has been sent successfully. We will get back to you soon.
+                Thank you, <strong><?php echo $sender_name; ?></strong>! Your message has been saved to the database. We will get back to you soon.
+            </div>
+        <?php elseif ($feedback_status === 'success_simulated'): ?>
+            <div class="alert alert-success" style="background-color: #e2e8f0; border-color: #cbd5e0; color: #4a5568;">
+                <strong>[Offline Demo Mode]</strong> Thank you, <strong><?php echo $sender_name; ?></strong>! Your feedback was received. (Connect to database to persist this).
+            </div>
+        <?php elseif ($feedback_status === 'error_db'): ?>
+            <div class="alert alert-error">
+                Database Error: Failed to save message. Details: <em><?php echo $db_error; ?></em>
             </div>
         <?php elseif ($feedback_status === 'error'): ?>
             <div class="alert alert-error">

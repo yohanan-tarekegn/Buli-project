@@ -1,6 +1,78 @@
-<?php
+ <?php
 $page_title = 'Home';
 require_once __DIR__ . '/includes/header.php';
+require_once __DIR__ . '/includes/db.php';
+
+$title_field = ($lang === 'am') ? 'title_am' : 'title_en';
+$content_field = ($lang === 'am') ? 'content_am' : 'content_en';
+
+$announcements = [];
+$news = [];
+
+if ($pdo) {
+    try {
+        $ann_stmt = $pdo->query("SELECT * FROM news_events WHERE type = 'announcement' ORDER BY date_posted DESC LIMIT 3");
+        $announcements = $ann_stmt->fetchAll();
+        
+        $news_stmt = $pdo->query("SELECT * FROM news_events WHERE type = 'news' ORDER BY date_posted DESC LIMIT 3");
+        $news = $news_stmt->fetchAll();
+    } catch (\PDOException $e) {
+        // Fallback to static
+    }
+}
+
+// Fallback static arrays if database query returns empty
+if (empty($announcements)) {
+    $announcements = [
+        [
+            'id' => 1,
+            'date_posted' => '2026-07-10',
+            'title_en' => 'Registration Open for Semester I (2026/2027)',
+            'title_am' => 'ለእረኛ (Regular) ተማሪዎች ምዝገባ ተጀምሯል (2018/2019 ዓ.ም)'
+        ],
+        [
+            'id' => 2,
+            'date_posted' => '2026-07-05',
+            'title_en' => 'Workshop on Innovation and Technology Transfer starts next Tuesday.',
+            'title_am' => 'የቴክኖሎጂ ፈጠራ ሴሚናር በቅርቡ ይጀምራል'
+        ],
+        [
+            'id' => 3,
+            'date_posted' => '2026-06-28',
+            'title_en' => 'Announcement: Graduation ceremony date and venue updates.',
+            'title_am' => 'የምረቃ ስነ-ስርዓት ዝግጅት'
+        ]
+    ];
+}
+
+if (empty($news)) {
+    $news = [
+        [
+            'id' => 1,
+            'date_posted' => '2026-07-12',
+            'title_en' => 'College Partners with Ministry of Innovation',
+            'title_am' => 'ከፈጠራና ቴክኖሎጂ ሚኒስቴር ጋር ስልታዊ ስምምነት ተፈረመ',
+            'content_en' => 'MGMBPTC has signed a new partnership agreement with the Ministry of Innovation and Technology to support student startups and hardware prototyping.',
+            'content_am' => 'ኮሌጃችን ከፈጠራና ቴክኖሎጂ ሚኒስቴር (MInT) ጋር በጋራ የፈጠራ ማዕከል በኮሌጁ ውስጥ ለማቋቋም የመግባቢያ ስምምነት ተፈራርሟል።'
+        ],
+        [
+            'id' => 2,
+            'date_posted' => '2026-06-20',
+            'title_en' => 'Continuous Skills Upgrade: Evening ICT Trainings',
+            'title_am' => 'የክህሎት ማሻሻያ፡ የማታ የኮምፒውተር ስልጠናዎች',
+            'content_en' => 'Registration is ongoing for short-term evening training programs in Database Management, Web Development, and Network Administration.',
+            'content_am' => 'የአካባቢውን ማህበረሰብ ፍላጎት ለማሟላት የአይቲ ክፍል የማታ አጫጭር ስልጠናዎችን አስፋፍቷል።'
+        ],
+        [
+            'id' => 3,
+            'date_posted' => '2026-05-15',
+            'title_en' => 'Automotive Department Receives New Lab Equipment',
+            'title_am' => 'የሞተርና አውቶሞቲቭ ወርክሾፕ እድሳት ተደረገለት',
+            'content_en' => 'To bolster practical learning, our automotive workshops received advanced vehicle diagnostic units and electric engines for study.',
+            'content_am' => 'የአውቶሞቲቭ ቴክኖሎጂ ወርክሾፓችን ዘመናዊ የምርመራ ማሽኖችን ተቀብሏል።'
+        ]
+    ];
+}
 ?>
 
 <!-- Hero Banner Section -->
@@ -33,18 +105,14 @@ require_once __DIR__ . '/includes/header.php';
     <section class="card notice-board">
         <h3><?php echo __('announcements'); ?></h3>
         <ul class="notice-list">
-            <li class="notice-item">
-                <span class="notice-date">July 10, 2026</span>
-                <a href="news.php#notice1">Registration for Next Academic Semester is Now Open!</a>
-            </li>
-            <li class="notice-item">
-                <span class="notice-date">July 05, 2026</span>
-                <a href="news.php#notice2">Workshop on Innovation and Technology Transfer starts next Tuesday.</a>
-            </li>
-            <li class="notice-item">
-                <span class="notice-date">June 28, 2026</span>
-                <a href="news.php#notice3">Announcement: Graduation ceremony date and venue updates.</a>
-            </li>
+            <?php foreach ($announcements as $ann): ?>
+                <li class="notice-item">
+                    <span class="notice-date"><?php echo date('M d, Y', strtotime($ann['date_posted'])); ?></span>
+                    <a href="news.php#notice<?php echo $ann['id']; ?>">
+                        <?php echo htmlspecialchars($ann[$title_field]); ?>
+                    </a>
+                </li>
+            <?php endforeach; ?>
         </ul>
     </section>
 </div>
@@ -73,30 +141,19 @@ require_once __DIR__ . '/includes/header.php';
 <section class="card" style="margin-bottom: 2rem;">
     <h3><?php echo __('latest_news'); ?></h3>
     <div class="grid-3" style="margin-top: 1rem; margin-bottom: 0;">
-        <div class="card" style="background-color: var(--bg-light);">
-            <span class="notice-date" style="margin-bottom: 0.5rem; display: block;">July 12, 2026</span>
-            <h4>College Partners with Ministry of Innovation</h4>
-            <p style="font-size: 0.9rem; margin-bottom: 1rem;">
-                MGMBPTC has signed a new partnership agreement with the Ministry of Innovation and Technology to support student startups and hardware prototyping.
-            </p>
-            <a href="news.php#news1" style="font-weight: bold; font-size: 0.9rem;"><?php echo __('btn_read_more'); ?> &rarr;</a>
-        </div>
-        <div class="card" style="background-color: var(--bg-light);">
-            <span class="notice-date" style="margin-bottom: 0.5rem; display: block;">June 20, 2026</span>
-            <h4>Short-term ICT Training Registration</h4>
-            <p style="font-size: 0.9rem; margin-bottom: 1rem;">
-                Registration is ongoing for short-term evening training programs in Database Management, Web Development, and Network Administration.
-            </p>
-            <a href="news.php#news2" style="font-weight: bold; font-size: 0.9rem;"><?php echo __('btn_read_more'); ?> &rarr;</a>
-        </div>
-        <div class="card" style="background-color: var(--bg-light);">
-            <span class="notice-date" style="margin-bottom: 0.5rem; display: block;">May 15, 2026</span>
-            <h4>Automotive Department Receives New Lab Equipment</h4>
-            <p style="font-size: 0.9rem; margin-bottom: 1rem;">
-                To bolster practical learning, our automotive workshops received advanced vehicle diagnostic units and electric engines for study.
-            </p>
-            <a href="news.php#news3" style="font-weight: bold; font-size: 0.9rem;"><?php echo __('btn_read_more'); ?> &rarr;</a>
-        </div>
+        <?php foreach ($news as $item): ?>
+            <div class="card" style="background-color: var(--bg-light);">
+                <span class="notice-date" style="margin-bottom: 0.5rem; display: block;"><?php echo date('M d, Y', strtotime($item['date_posted'])); ?></span>
+                <h4><?php echo htmlspecialchars($item[$title_field]); ?></h4>
+                <p style="font-size: 0.9rem; margin-bottom: 1rem;">
+                    <?php 
+                        $text = $item[$content_field];
+                        echo htmlspecialchars(strlen($text) > 120 ? substr($text, 0, 117) . '...' : $text); 
+                    ?>
+                </p>
+                <a href="news.php#news<?php echo $item['id']; ?>" style="font-weight: bold; font-size: 0.9rem;"><?php echo __('btn_read_more'); ?> &rarr;</a>
+            </div>
+        <?php endforeach; ?>
     </div>
 </section>
 
