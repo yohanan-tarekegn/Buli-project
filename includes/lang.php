@@ -39,6 +39,8 @@ $translations = [
         'nav_staff' => 'Staff Directory',
         'nav_services' => 'Student Services',
         'nav_contact' => 'Contact Us',
+        'nav_gallery' => 'Gallery',
+        'nav_download' => 'Downloads',
         
         // General text
         'btn_read_more' => 'Read More',
@@ -84,6 +86,8 @@ $translations = [
         'nav_staff' => 'የሰራተኞች ማውጫ',
         'nav_services' => 'የተማሪዎች አገልግሎት',
         'nav_contact' => 'አድራሻችን',
+        'nav_gallery' => 'ማዕከለ-ስዕላት',
+        'nav_download' => 'ማውረጃዎች',
         
         // General text
         'btn_read_more' => 'ተጨማሪ ያንብቡ',

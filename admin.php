@@ -30,15 +30,114 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login_submit'])) {
     }
 }
 
-// Handle application status update (Approve / Reject)
+// Handle application status update (Approve / Reject) — auto-creates student account on Approval
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status']) && isset($_SESSION['admin_logged_in'])) {
     $id     = (int)($_POST['record_id'] ?? 0);
     $status = $_POST['new_status'] ?? '';
     if ($id > 0 && in_array($status, ['Approved', 'Rejected'])) {
         $stmt = $pdo->prepare("UPDATE admissions SET status = :status WHERE id = :id");
         $stmt->execute([':status' => $status, ':id' => $id]);
+
+        // === AUTO-CREATE STUDENT PORTAL ACCOUNT ON APPROVAL ===
+        if ($status === 'Approved' && $pdo) {
+            $adm = $pdo->prepare("SELECT * FROM admissions WHERE id = :id");
+            $adm->execute([':id' => $id]);
+            $admission = $adm->fetch();
+
+            if ($admission) {
+                // Check account doesn't already exist
+                $chk = $pdo->prepare("SELECT id FROM students WHERE email = :email");
+                $chk->execute([':email' => $admission['email']]);
+                if (!$chk->fetch()) {
+                    // Generate sequential Student ID: MGMB/YYYY/NNNN
+                    $count = (int)$pdo->query("SELECT COUNT(*) FROM students")->fetchColumn();
+                    $student_id_no = 'MGMB/' . date('Y') . '/' . str_pad($count + 1, 4, '0', STR_PAD_LEFT);
+
+                    // Generate secure 8-char OTP (no ambiguous chars)
+                    $charset = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+                    $otp = '';
+                    for ($i = 0; $i < 8; $i++) {
+                        $otp .= $charset[random_int(0, strlen($charset) - 1)];
+                    }
+
+                    $hash = password_hash($otp, PASSWORD_DEFAULT);
+
+                    $ins = $pdo->prepare(
+                        "INSERT INTO students (full_name, email, password_hash, department, student_id_no, status, must_change_password, admission_ref_id)
+                         VALUES (:name, :email, :hash, :dept, :sid, 'Active', 1, :ref_id)"
+                    );
+                    $ins->execute([
+                        ':name'   => $admission['full_name'],
+                        ':email'  => $admission['email'],
+                        ':hash'   => $hash,
+                        ':dept'   => $admission['department'],
+                        ':sid'    => $student_id_no,
+                        ':ref_id' => $admission['id']
+                    ]);
+
+                    // Store credentials in session flash for one-time display
+                    $_SESSION['new_student_credentials'] = [
+                        'name'       => $admission['full_name'],
+                        'email'      => $admission['email'],
+                        'department' => $admission['department'],
+                        'student_id' => $student_id_no,
+                        'otp'        => $otp
+                    ];
+                }
+            }
+        }
     }
     header('Location: admin.php?tab=students');
+    exit;
+}
+
+// Handle Reset Password (regenerate OTP for a student)
+$reset_msg  = '';
+$reset_type = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reset_student_password']) && isset($_SESSION['admin_logged_in'])) {
+    $id = (int)($_POST['account_id'] ?? 0);
+    if ($id > 0 && $pdo) {
+        try {
+            // Fetch student so we can return their name
+            $s = $pdo->prepare("SELECT full_name, email FROM students WHERE id = :id");
+            $s->execute([':id' => $id]);
+            $stu = $s->fetch();
+
+            if ($stu) {
+                $charset = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+                $otp = '';
+                for ($i = 0; $i < 8; $i++) {
+                    $otp .= $charset[random_int(0, strlen($charset) - 1)];
+                }
+                $hash = password_hash($otp, PASSWORD_DEFAULT);
+                $upd = $pdo->prepare("UPDATE students SET password_hash = :hash, must_change_password = 1 WHERE id = :id");
+                $upd->execute([':hash' => $hash, ':id' => $id]);
+
+                // Flash new credentials via session
+                $_SESSION['new_student_credentials'] = [
+                    'name'       => $stu['full_name'],
+                    'email'      => $stu['email'],
+                    'department' => '',
+                    'student_id' => '',
+                    'otp'        => $otp,
+                    'is_reset'   => true
+                ];
+            }
+        } catch (\PDOException $e) {
+            // silently ignore
+        }
+    }
+    header('Location: admin.php?tab=accounts');
+    exit;
+}
+
+// Handle delete student portal account
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_student_account']) && isset($_SESSION['admin_logged_in'])) {
+    $id = (int)($_POST['account_id'] ?? 0);
+    if ($id > 0 && $pdo) {
+        $pdo->prepare("DELETE FROM students WHERE id = :id")->execute([':id' => $id]);
+    }
+    header('Location: admin.php?tab=accounts');
     exit;
 }
 
@@ -184,17 +283,20 @@ $active_tab = $_GET['tab'] ?? 'students';
 
 $students = [];
 $messages = [];
+$accounts = [];
 $summary  = [];
 
 if ($pdo) {
     $students = $pdo->query("SELECT * FROM admissions ORDER BY created_at DESC")->fetchAll();
     $messages = $pdo->query("SELECT * FROM contact_messages ORDER BY created_at DESC")->fetchAll();
+    $accounts = $pdo->query("SELECT id, full_name, email, department, student_id_no, status, created_at FROM students ORDER BY created_at DESC")->fetchAll();
 
     $summary['total_students']  = $pdo->query("SELECT COUNT(*) FROM admissions")->fetchColumn();
     $summary['pending']         = $pdo->query("SELECT COUNT(*) FROM admissions WHERE status='Pending'")->fetchColumn();
     $summary['approved']        = $pdo->query("SELECT COUNT(*) FROM admissions WHERE status='Approved'")->fetchColumn();
     $summary['rejected']        = $pdo->query("SELECT COUNT(*) FROM admissions WHERE status='Rejected'")->fetchColumn();
     $summary['total_messages']  = $pdo->query("SELECT COUNT(*) FROM contact_messages")->fetchColumn();
+    $summary['total_accounts']  = $pdo->query("SELECT COUNT(*) FROM students")->fetchColumn();
 }
 ?>
 <!DOCTYPE html>
@@ -242,10 +344,21 @@ if ($pdo) {
         /* -- Summary Cards -- */
         .summary-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(6, 1fr);
             gap: 1rem;
             margin-bottom: 2rem;
         }
+        /* Account form */
+        .acct-form { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+        .acct-form .full-width { grid-column: 1 / -1; }
+        .acct-form label { display: block; font-size: 0.85rem; font-weight:600; color:#2d3748; margin-bottom:0.3rem; }
+        .acct-form input, .acct-form select { width:100%; padding:0.6rem 0.75rem; border:1px solid #cbd5e0; border-radius:4px; font-size:0.9rem; font-family:inherit; }
+        .acct-form input:focus, .acct-form select:focus { outline:none; border-color:#1a365d; }
+        .btn-create { background:#1a365d; color:#fff; padding:0.65rem 1.5rem; border:none; border-radius:4px; font-weight:bold; cursor:pointer; font-size:0.9rem; }
+        .btn-create:hover { background:#2b6cb0; }
+        .acct-alert { padding:0.75rem 1rem; border-radius:4px; margin-bottom:1.25rem; font-size:0.9rem; }
+        .acct-alert-success { background:#c6f6d5; color:#22543d; border:1px solid #9ae6b4; }
+        .acct-alert-error { background:#fed7d7; color:#742a2a; border:1px solid #feb2b2; }
         .summary-card {
             background: #fff;
             border: 1px solid #cbd5e0;
@@ -357,6 +470,24 @@ if ($pdo) {
             .summary-grid { grid-template-columns: 1fr 1fr; }
             .admin-bar { flex-direction: column; gap: 0.75rem; }
         }
+        /* === Credential Card === */
+        .cred-card {
+            background: #f0fff4;
+            border: 2px solid #48bb78;
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+        }
+        .cred-card h3 { color: #276749; font-size: 1.15rem; margin-bottom: 0.5rem; }
+        .cred-card p  { color: #2f855a; font-size: 0.9rem; margin-bottom: 1.25rem; }
+        .cred-table { width: 100%; border-collapse: collapse; margin-bottom: 1.25rem; }
+        .cred-table td { padding: 0.6rem 0.85rem; border: 1px solid #9ae6b4; font-size: 0.95rem; }
+        .cred-table td:first-child { font-weight: bold; color: #276749; width: 180px; background: #c6f6d5; }
+        .cred-otp { font-size: 1.4rem; font-weight: bold; letter-spacing: 0.2rem; color: #22543d; font-family: monospace; }
+        .cred-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .btn-print { background:#276749; color:#fff; border:none; padding:0.5rem 1.25rem; border-radius:4px; cursor:pointer; font-weight:bold; font-size:0.9rem; }
+        .btn-print:hover { background:#2f855a; }
+        .cred-warning { background:#fefcbf; border:1px solid #f6e05e; border-radius:4px; padding:0.6rem 1rem; font-size:0.85rem; color:#744210; margin-top:1rem; }
     </style>
 </head>
 <body>
@@ -372,6 +503,40 @@ if ($pdo) {
 </div>
 
 <div class="admin-container">
+
+    <?php
+    // === SHOW CREDENTIAL CARD (one-time session flash) ===
+    if (isset($_SESSION['new_student_credentials'])):
+        $cred = $_SESSION['new_student_credentials'];
+        unset($_SESSION['new_student_credentials']); // Show only once
+    ?>
+    <div class="cred-card" id="credCard">
+        <?php if (!empty($cred['is_reset'])): ?>
+            <h3>&#128273; Student Password Reset Successfully</h3>
+            <p>A new One-Time Password (OTP) has been generated. <strong>Share this with the student immediately</strong> — the OTP is shown only once.</p>
+        <?php else: ?>
+            <h3>&#10003; Student Account Auto-Created Successfully</h3>
+            <p>The following login credentials were generated. <strong>Share these with the student immediately</strong> — the OTP is shown only once.</p>
+        <?php endif; ?>
+        <table class="cred-table">
+            <tr><td>Full Name</td><td><?php echo htmlspecialchars($cred['name']); ?></td></tr>
+            <?php if (!empty($cred['department'])): ?>
+                <tr><td>Department</td><td><?php echo htmlspecialchars($cred['department']); ?></td></tr>
+            <?php endif; ?>
+            <?php if (!empty($cred['student_id'])): ?>
+                <tr><td>Student ID</td><td><strong><?php echo htmlspecialchars($cred['student_id']); ?></strong></td></tr>
+            <?php endif; ?>
+            <tr><td>Login Email</td><td><?php echo htmlspecialchars($cred['email']); ?></td></tr>
+            <tr><td>One-Time Password</td><td><span class="cred-otp"><?php echo htmlspecialchars($cred['otp']); ?></span></td></tr>
+        </table>
+        <div class="cred-warning">
+            &#9888; The student will be forced to change this password on their next login.
+        </div>
+        <div class="cred-actions" style="margin-top:1rem;">
+            <button class="btn-print" onclick="window.print()">&#128438; Print / Save Credentials</button>
+        </div>
+    </div>
+    <?php endif; ?>
 
     <!-- Summary Cards -->
     <div class="summary-grid">
@@ -395,15 +560,22 @@ if ($pdo) {
             <h2><?php echo $summary['total_messages']; ?></h2>
             <p>Messages</p>
         </div>
+        <div class="summary-card" style="border-top:3px solid #1a365d;">
+            <h2 style="color:#1a365d;"><?php echo $summary['total_accounts'] ?? 0; ?></h2>
+            <p>Student Accounts</p>
+        </div>
     </div>
 
     <!-- Tab Switcher -->
     <div class="tabs">
         <a href="admin.php?tab=students" class="tab-btn <?php echo $active_tab === 'students' ? 'active' : ''; ?>">
-            &#127891; Registered Students (<?php echo $summary['total_students']; ?>)
+            &#127891; Applications (<?php echo $summary['total_students']; ?>)
         </a>
         <a href="admin.php?tab=messages" class="tab-btn <?php echo $active_tab === 'messages' ? 'active' : ''; ?>">
-            &#128140; Contact Messages (<?php echo $summary['total_messages']; ?>)
+            &#128140; Messages (<?php echo $summary['total_messages']; ?>)
+        </a>
+        <a href="admin.php?tab=accounts" class="tab-btn <?php echo $active_tab === 'accounts' ? 'active' : ''; ?>">
+            &#128273; Student Accounts (<?php echo $summary['total_accounts'] ?? 0; ?>)
         </a>
     </div>
 
@@ -482,7 +654,7 @@ if ($pdo) {
                 </table>
             <?php endif; ?>
 
-        <?php else: ?>
+        <?php elseif ($active_tab === 'messages'): ?>
 
             <h3>Contact Message Inbox</h3>
 
@@ -523,6 +695,70 @@ if ($pdo) {
                                         <input type="hidden" name="record_id" value="<?php echo $m['id']; ?>">
                                         <button type="submit" name="delete_message" class="btn-sm btn-delete">Delete</button>
                                     </form>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php endif; ?>
+
+        <?php elseif ($active_tab === 'accounts'): ?>
+
+            <h3>&#128273; Student Portal Accounts</h3>
+            <p style="color:#4a5568; font-size:0.9rem; margin-bottom:1.5rem;">
+                Accounts are <strong>automatically created</strong> when you approve an application in the Applications tab.
+                From here you can view all accounts, reset a student's password, or delete an account.
+            </p>
+
+            <!-- Credential card re-uses the same session flash used by auto-creation -->
+
+            <!-- Existing Accounts Table -->
+            <?php if (empty($accounts)): ?>
+                <div class="empty-msg">
+                    No student portal accounts yet. Approve an application in the
+                    <a href="admin.php?tab=students">Applications tab</a> to create one automatically.
+                </div>
+            <?php else: ?>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Student ID</th>
+                            <th>Full Name</th>
+                            <th>Email (Login)</th>
+                            <th>Department</th>
+                            <th>OTP?</th>
+                            <th>Enrolled</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($accounts as $a): ?>
+                            <tr>
+                                <td><?php echo $a['id']; ?></td>
+                                <td><strong><?php echo htmlspecialchars($a['student_id_no'] ?: '—'); ?></strong></td>
+                                <td><?php echo htmlspecialchars($a['full_name']); ?></td>
+                                <td><?php echo htmlspecialchars($a['email']); ?></td>
+                                <td><?php echo htmlspecialchars($a['department']); ?></td>
+                                <td>
+                                    <?php if (!empty($a['must_change_password'])): ?>
+                                        <span class="badge badge-pending" title="Student has not changed their OTP yet">Pending</span>
+                                    <?php else: ?>
+                                        <span class="badge badge-approved">Changed</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td><?php echo date('d M Y', strtotime($a['created_at'])); ?></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <form method="POST" onsubmit="return confirm('Reset password for <?php echo addslashes($a['full_name']); ?>? A new OTP will be generated.')">
+                                            <input type="hidden" name="account_id" value="<?php echo $a['id']; ?>">
+                                            <button type="submit" name="reset_student_password" class="btn-sm btn-approve">Reset OTP</button>
+                                        </form>
+                                        <form method="POST" onsubmit="return confirm('Permanently delete this student account?');">
+                                            <input type="hidden" name="account_id" value="<?php echo $a['id']; ?>">
+                                            <button type="submit" name="delete_student_account" class="btn-sm btn-delete">Delete</button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

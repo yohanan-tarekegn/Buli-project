@@ -137,12 +137,12 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     </li>
                     <li>
                         <a href="gallery.php" class="<?php echo $current_page == 'gallery.php' ? 'active' : ''; ?>">
-                            Gallery
+                           <?php echo __('nav_gallery'); ?>
                         </a>
                     </li>
                     <li>
                         <a href="downloads.php" class="<?php echo $current_page == 'downloads.php' ? 'active' : ''; ?>">
-                            Downloads
+                            <?php echo __('nav_download'); ?>
                         </a>
                     </li>
                     <li>

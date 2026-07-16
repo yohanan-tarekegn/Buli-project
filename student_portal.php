@@ -6,11 +6,26 @@ if (!isset($_SESSION['student_id'])) {
     exit;
 }
 
-$page_title = 'Student Dashboard';
-require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/db.php';
 
 $student_id = $_SESSION['student_id'];
+
+// Guard: if student still has OTP set, force them to change password first
+if ($pdo) {
+    try {
+        $chk = $pdo->prepare("SELECT must_change_password FROM students WHERE id = :id");
+        $chk->execute([':id' => $student_id]);
+        $row = $chk->fetch();
+        if ($row && !empty($row['must_change_password'])) {
+            header('Location: change_password.php');
+            exit;
+        }
+    } catch (\PDOException $e) { /* silently skip */ }
+}
+
+$page_title = 'Student Dashboard';
+require_once __DIR__ . '/includes/header.php';
+
 $student = null;
 $announcements = [];
 $downloads = [];
