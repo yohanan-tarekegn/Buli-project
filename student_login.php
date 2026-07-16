@@ -1,7 +1,5 @@
 <?php
 session_start();
-$page_title = 'Student Portal Login';
-require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/db.php';
 
 $login_error = '';
@@ -85,7 +83,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register_submit'])) {
         $register_error = 'Please fill in all required fields.';
     }
 }
+
+$page_title = 'Student Portal Login';
+require_once __DIR__ . '/includes/header.php';
 ?>
+
 
 <style>
     .portal-container {

@@ -1,7 +1,5 @@
 <?php
 session_start();
-$page_title = 'Staff & Admin Login';
-require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/db.php';
 
 $login_error = '';
@@ -58,7 +56,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login_submit'])) {
         $login_error = 'Please fill in all fields.';
     }
 }
+
+$page_title = 'Staff & Admin Login';
+require_once __DIR__ . '/includes/header.php';
 ?>
+
 
 <style>
     .staff-container {
