@@ -111,3 +111,70 @@ INSERT INTO `news_events` (`title_en`, `title_am`, `content_en`, `content_am`, `
   'event',
   '2026-10-05'
 );
+
+-- 4. Table structure for table `students`
+CREATE TABLE IF NOT EXISTS `students` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `full_name` VARCHAR(100) NOT NULL,
+  `email` VARCHAR(100) NOT NULL UNIQUE,
+  `password_hash` VARCHAR(255) NOT NULL,
+  `department` VARCHAR(100) DEFAULT NULL,
+  `student_id_no` VARCHAR(50) DEFAULT NULL,
+  `status` VARCHAR(20) DEFAULT 'Active',
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 5. Table structure for table `staff`
+CREATE TABLE IF NOT EXISTS `staff` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `full_name` VARCHAR(100) NOT NULL,
+  `email` VARCHAR(100) NOT NULL UNIQUE,
+  `password_hash` VARCHAR(255) NOT NULL,
+  `role` ENUM('admin','staff') DEFAULT 'staff',
+  `department` VARCHAR(100) DEFAULT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 6. Table structure for table `gallery`
+CREATE TABLE IF NOT EXISTS `gallery` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `title` VARCHAR(200) NOT NULL,
+  `description` TEXT DEFAULT NULL,
+  `type` ENUM('photo','video') DEFAULT 'photo',
+  `date_taken` DATE DEFAULT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 7. Table structure for table `downloads`
+CREATE TABLE IF NOT EXISTS `downloads` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `title` VARCHAR(200) NOT NULL,
+  `description` VARCHAR(255) DEFAULT NULL,
+  `category` VARCHAR(100) DEFAULT 'General',
+  `file_name` VARCHAR(255) NOT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Seed default admin and staff accounts
+INSERT IGNORE INTO `staff` (`id`, `full_name`, `email`, `password_hash`, `role`, `department`) VALUES
+(1, 'Admin User', 'admin@mgmbptc.edu.et', '$2y$10$tZk57Jj0r/Pq2kZz/Y44N.K1P7L4K/83z6d.jV0m6pP/xY54T54rS', 'admin', 'Administration'), -- buliadmin123
+(2, 'Tsegaye Mengistu', 'tsegaye@mgmbptc.edu.et', '$2y$10$7Zk57Jj0r/Pq2kZz/Y44N.v4l1Y6.7x6V9d.jV0m6pP/xY54T54rS', 'staff', 'Information Technology'); -- staff123
+
+-- Seed gallery items
+INSERT IGNORE INTO `gallery` (`id`, `title`, `description`, `type`, `date_taken`) VALUES
+(1, 'Annual Graduation Ceremony 2026', 'Graduates celebrating at the main pavilion.', 'photo', '2026-07-01'),
+(2, 'IT Workshop Lab Session', 'Students during a hands-on ICT practical session.', 'photo', '2026-06-15'),
+(3, 'Innovation Exhibition 2026', 'Student projects showcased at the national TVET expo.', 'photo', '2026-05-20'),
+(4, 'Automotive Workshop', 'Automotive trainees working on engine diagnostics.', 'photo', '2026-04-10'),
+(5, 'College Campus Tour', 'Video overview of the college facilities and campus.', 'video', '2026-03-05'),
+(6, 'Solar Energy Installation Training', 'Students installing a solar panel unit on campus.', 'photo', '2026-02-18');
+
+-- Seed download items
+INSERT IGNORE INTO `downloads` (`id`, `title`, `description`, `category`, `file_name`) VALUES
+(1, 'Student Application Form', 'Official form for new student admissions.', 'Application Forms', 'application_form.pdf'),
+(2, 'TVET Level Registration Guide', 'Step-by-step guide for level registration.', 'Academic Guides', 'registration_guide.pdf'),
+(3, 'College Academic Calendar 2026/27', 'Official academic calendar for the new year.', 'Academic Guides', 'academic_calendar_2026.pdf'),
+(4, 'Student Code of Conduct', 'Rules, regulations and student discipline manual.', 'Regulations', 'student_conduct.pdf'),
+(5, 'Research Publication Vol. 3', 'MGMBPTC annual research and innovation publication.', 'Publications', 'research_vol3.pdf'),
+(6, 'Short-Course Registration Form', 'Form for enrolling in evening short-term programs.', 'Application Forms', 'short_course_form.pdf');
+
