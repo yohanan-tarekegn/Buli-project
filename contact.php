@@ -48,8 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             Feel free to visit our campus or reach out via phone/email during our regular office hours (Monday to Friday, 8:00 AM - 5:00 PM).
         </p>
         
-        <p style="margin-bottom: 0.5rem;"><strong><?php echo __('address'); ?>:</strong> Addis Ababa, Ethiopia</p>
-        <p style="margin-bottom: 0.5rem;"><strong><?php echo __('phone'); ?>:</strong> +251 11 XXXXXXX / +251 911 XXXXXXX</p>
+        <p style="margin-bottom: 0.5rem;"><strong><?php echo __('address'); ?>:</strong> Holteta,Oromia Region, Ethiopia</p>
+        <p style="margin-bottom: 0.5rem;"><strong><?php echo __('phone'); ?>:</strong> +251 11 123456</p>
         <p style="margin-bottom: 1rem;"><strong><?php echo __('email'); ?>:</strong> info@mgmbptc.edu.et</p>
 
         <h4 style="margin-top: 1.5rem; margin-bottom: 0.75rem;">Location Map Placeholder</h4>

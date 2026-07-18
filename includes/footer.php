@@ -35,9 +35,10 @@
                 <h3 ><a href="contact.php" style="color: white">
                             <?php echo __('nav_contact'); ?>
                         </a></h3>
-                <p><strong><?php echo __('address'); ?>:</strong> Addis Ababa, Ethiopia</p>
-                <p><strong><?php echo __('phone'); ?>:</strong> +251 11 XXXXXXX</p>
-                <p><strong><?php echo __('email'); ?>:</strong> info@mgmbptc.edu.et</p>
+                <p><strong><?php echo __('address'); ?>:</strong> Holeta,Oromia Region Ethiopia</p>
+                <p><strong><?php echo __('phone'); ?>:</strong> +251 11 123456</p>
+                <p><strong><?php echo __('email'); ?>:</strong> info@mjmbuli.edu.et</p>
+				 <p><strong><?php echo __('Office Hours'); ?>:<br></strong> Monday-Friday<br>8:00 AM-5:00 PM</p>
             </div>
         </div>
         
