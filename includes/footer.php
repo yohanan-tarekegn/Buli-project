@@ -22,10 +22,19 @@
                     <li><a href="contact.php"><?php echo __('nav_contact'); ?></a></li>
                 </ul>
             </div>
+            <!-- resources -->
+             <div class="footer-widget footer-resources">
+                <h3><?php echo __('resources'); ?></h3>
+                <ul>
+                    <li><a href="downloads.php"><?php echo __('nav_download'); ?></a></li>
+                </ul>
+             </div>
             
             <!-- Contact widget -->
             <div class="footer-widget footer-contact">
-                <h3><?php echo __('nav_contact'); ?></h3>
+                <h3 ><a href="contact.php" style="color: white">
+                            <?php echo __('nav_contact'); ?>
+                        </a></h3>
                 <p><strong><?php echo __('address'); ?>:</strong> Addis Ababa, Ethiopia</p>
                 <p><strong><?php echo __('phone'); ?>:</strong> +251 11 XXXXXXX</p>
                 <p><strong><?php echo __('email'); ?>:</strong> info@mgmbptc.edu.et</p>

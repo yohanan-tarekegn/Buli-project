@@ -108,6 +108,55 @@ h1, h2, h3, h4, h5, h6 {
     gap: 1.5rem;
 }
 
+ /* Style the dropdown container */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Style the top button/link */
+.dropbtn {
+  background-color: #004085;
+  color: white;
+  padding: 12px 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Hide the dropdown menu by default */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Style links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change link color on hover */
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+/* THE MAGIC PART: Show the menu when hovering over the .dropdown container */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Optional: Change button style when hovering */
+.dropdown:hover .dropbtn {
+  background-color: #002752;
+}
+
 /* Language selector */
 .lang-switcher {
     font-size: 0.9rem;

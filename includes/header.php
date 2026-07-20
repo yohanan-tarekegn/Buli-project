@@ -101,9 +101,30 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         </a>
                     </li>
                     <li>
+                        <nav>
+  <div class="dropdown">
+    <button class="dropbtn"><?php echo __('nav_about'); ?></button>
+    <div class="dropdown-content">
+       <a href="gallery.php" class="<?php echo $current_page == 'gallery.php' ? 'active' : ''; ?>">
+                           <?php echo __('nav_gallery'); ?>
+                        </a>
+   
+      <a href="contact.php" class="<?php echo $current_page == 'contact.php' ? 'active' : ''; ?>">
+                            <?php echo __('nav_contact'); ?>
+                        </a>
                         <a href="about.php" class="<?php echo $current_page == 'about.php' ? 'active' : ''; ?>">
                             <?php echo __('nav_about'); ?>
                         </a>
+                        <a href="history.php" class="<?php echo $current_page == 'history.php' ? 'active' : ''; ?>">
+                            <?php echo __('nav_history'); ?>
+                        </a>
+                        <a href="mission.php" class="<?php echo $current_page == 'mission.php' ? 'active' : ''; ?>">
+                            <?php echo __('nav_mission'); ?>
+                        </a>
+    </div>
+  </div>
+</nav>
+                        
                     </li>
                     <li>
                         <a href="academics.php" class="<?php echo $current_page == 'academics.php' ? 'active' : ''; ?>">
@@ -125,29 +146,15 @@ $current_page = basename($_SERVER['PHP_SELF']);
                             <?php echo __('nav_research'); ?>
                         </a>
                     </li>
-                    <li>
-                        <a href="staff.php" class="<?php echo $current_page == 'staff.php' ? 'active' : ''; ?>">
-                            <?php echo __('nav_staff'); ?>
-                        </a>
-                    </li>
+                    
                     <li>
                         <a href="services.php" class="<?php echo $current_page == 'services.php' ? 'active' : ''; ?>">
                             <?php echo __('nav_services'); ?>
                         </a>
                     </li>
                     <li>
-                        <a href="gallery.php" class="<?php echo $current_page == 'gallery.php' ? 'active' : ''; ?>">
-                           <?php echo __('nav_gallery'); ?>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="downloads.php" class="<?php echo $current_page == 'downloads.php' ? 'active' : ''; ?>">
-                            <?php echo __('nav_download'); ?>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="contact.php" class="<?php echo $current_page == 'contact.php' ? 'active' : ''; ?>">
-                            <?php echo __('nav_contact'); ?>
+                        <a href="staff.php" class="<?php echo $current_page == 'staff.php' ? 'active' : ''; ?>">
+                            <?php echo __('nav_staff'); ?>
                         </a>
                     </li>
                 </ul>

@@ -41,6 +41,8 @@ $translations = [
         'nav_contact' => 'Contact Us',
         'nav_gallery' => 'Gallery',
         'nav_download' => 'Downloads',
+        'nav_mission' => 'Mission',
+        'nav_history' => 'History & Profile',
         
         // General text
         'btn_read_more' => 'Read More',
@@ -88,6 +90,8 @@ $translations = [
         'nav_contact' => 'አድራሻችን',
         'nav_gallery' => 'ማዕከለ-ስዕላት',
         'nav_download' => 'ማውረጃዎች',
+        'nav_mission' => 'ተልዕኮ',
+        'nav_history' => 'ታሪክ እና መግለጫ',
         
         // General text
         'btn_read_more' => 'ተጨማሪ ያንብቡ',
