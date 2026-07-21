@@ -81,6 +81,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <a href="student_login.php"><span class="icon">&#127891;</span> Student Portal</a>
                         <a href="staff_login.php"><span class="icon">&#128100;</span> Staff Portal</a>
                         <a href="admin.php"><span class="icon">&#9998;</span> Admin Panel</a>
+                        <a href="elearning.php"><span class="icon">&#128187;</span> e-Learning Portal</a>
                     </div>
                 </div>
 

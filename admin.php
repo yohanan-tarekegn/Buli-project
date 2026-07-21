@@ -597,9 +597,10 @@ if ($pdo) {
                         <tr>
                             <th>#</th>
                             <th>Full Name</th>
-                            <th>Email Address</th>
-                            <th>Phone Number</th>
-                            <th>Department</th>
+                            <th>Contact Info</th>
+                            <th>Program / Department</th>
+                            <th>Study Mode</th>
+                            <th>Uploaded Scans</th>
                             <th>Applied On</th>
                             <th>Status</th>
                             <th>Actions</th>
@@ -610,9 +611,40 @@ if ($pdo) {
                             <tr>
                                 <td><?php echo $s['id']; ?></td>
                                 <td><strong><?php echo htmlspecialchars($s['full_name']); ?></strong></td>
-                                <td><?php echo htmlspecialchars($s['email']); ?></td>
-                                <td><?php echo htmlspecialchars($s['phone']); ?></td>
-                                <td><?php echo htmlspecialchars($s['department']); ?></td>
+                                <td style="font-size: 0.85rem; line-height: 1.4;">
+                                    📧 <?php echo htmlspecialchars($s['email']); ?><br>
+                                    📞 <?php echo htmlspecialchars($s['phone']); ?>
+                                </td>
+                                <td style="font-size: 0.85rem; line-height: 1.4;">
+                                    <strong><?php echo htmlspecialchars($s['department']); ?></strong><br>
+                                    <span style="color: #718096; font-size: 0.8rem;"><?php echo htmlspecialchars($s['program_type'] ?? 'TVET'); ?></span>
+                                </td>
+                                <td>
+                                    <span class="badge" style="background:#edf2f7; color:#2d3748;">
+                                        <?php echo htmlspecialchars($s['program_mode'] ?? 'Regular'); ?>
+                                    </span>
+                                </td>
+                                <td>
+                                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                                        <?php if (!empty($s['file_transcript'])): ?>
+                                            <a href="<?php echo htmlspecialchars($s['file_transcript']); ?>" target="_blank" class="btn-sm btn-approve" style="text-decoration:none; font-size:0.75rem; text-align:center; display:block;">📄 Transcript</a>
+                                        <?php else: ?>
+                                            <span style="color:#a0aec0; font-size:0.75rem;">No Transcript</span>
+                                        <?php endif; ?>
+
+                                        <?php if (!empty($s['file_id_card'])): ?>
+                                            <a href="<?php echo htmlspecialchars($s['file_id_card']); ?>" target="_blank" class="btn-sm btn-reject" style="text-decoration:none; font-size:0.75rem; text-align:center; display:block; background:#e2e8f0; color:#4a5568;">🪪 ID Card</a>
+                                        <?php else: ?>
+                                            <span style="color:#a0aec0; font-size:0.75rem;">No ID Card</span>
+                                        <?php endif; ?>
+
+                                        <?php if (!empty($s['file_photo'])): ?>
+                                            <a href="<?php echo htmlspecialchars($s['file_photo']); ?>" target="_blank" class="btn-sm" style="text-decoration:none; font-size:0.75rem; text-align:center; display:block; background:#ebf8ff; color:#2b6cb0;">👤 Photo</a>
+                                        <?php else: ?>
+                                            <span style="color:#a0aec0; font-size:0.75rem;">No Photo</span>
+                                        <?php endif; ?>
+                                    </div>
+                                </td>
                                 <td><?php echo date('d M Y, H:i', strtotime($s['created_at'])); ?></td>
                                 <td>
                                     <?php
