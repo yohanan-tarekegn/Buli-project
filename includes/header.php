@@ -149,7 +149,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     </li>
                     <li class="dropdown">
                      <button class="dropbtn">
-        Student Affairs & Services ▼
+        <?php echo __('nav_studentservice')?>
     </button>
                     
                     <div class="dropdown-content">

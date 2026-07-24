@@ -43,6 +43,7 @@ $translations = [
         'nav_download' => 'Downloads',
         'nav_mission' => 'Mission',
         'nav_history' => 'History & Profile',
+        'nav_studentservice' => 'Students service',
         
         // General text
         'btn_read_more' => 'Read More',
@@ -92,6 +93,7 @@ $translations = [
         'nav_download' => 'ማውረጃዎች',
         'nav_mission' => 'ተልዕኮ',
         'nav_history' => 'ታሪክ እና መግለጫ',
+        'nav_studentservice' => 'የተማሪዎች አገልግሎት',
         
         // General text
         'btn_read_more' => 'ተጨማሪ ያንብቡ',
