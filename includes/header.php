@@ -147,12 +147,36 @@ $current_page = basename($_SERVER['PHP_SELF']);
                             <?php echo __('nav_research'); ?>
                         </a>
                     </li>
+                    <li class="dropdown">
+                     <button class="dropbtn">
+        Student Affairs & Services ▼
+    </button>
                     
-                    <li>
-                        <a href="services.php" class="<?php echo $current_page == 'services.php' ? 'active' : ''; ?>">
-                            <?php echo __('nav_services'); ?>
-                        </a>
-                    </li>
+                    <div class="dropdown-content">
+
+
+                        <a href="academic-advising.php">Academic Advising & Counseling</a>
+
+                        <a href="scholarship.php">Scholarships & Financial Support</a>
+
+                        <a href="health-services.php">Health Services</a>
+
+                        <a href="housing.php">Student Housing & Accommodation</a>
+
+                        <a href="career-development.php">Career Development Services</a>
+
+                        <a href="clubs.php">Student Clubs & Organizations</a>
+
+                        <a href="sports-recreation.php">Sports & Recreation</a>
+
+                        <a href="grievance.php">Grievance & Complaint Services</a>
+
+                        <a href="forms-documents.php">Forms & Documents</a>
+
+                        <a href="library-services.php">Library Services</a>
+
+                     </div>
+</li>
                     <li>
                         <a href="staff.php" class="<?php echo $current_page == 'staff.php' ? 'active' : ''; ?>">
                             <?php echo __('nav_staff'); ?>
