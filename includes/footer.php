@@ -18,7 +18,6 @@
                     <li><a href="about.php"><?php echo __('nav_about'); ?></a></li>
                     <li><a href="academics.php"><?php echo __('nav_academics'); ?></a></li>
                     <li><a href="admission.php"><?php echo __('nav_admission'); ?></a></li>
-                    <li><a href="services.php"><?php echo __('nav_services'); ?></a></li>
                     <li><a href="contact.php"><?php echo __('nav_contact'); ?></a></li>
                 </ul>
             </div>

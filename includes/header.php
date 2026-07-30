@@ -103,29 +103,27 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     </li>
                     <li>
                         <nav>
-  <div class="dropdown">
-    <button class="dropbtn"><?php echo __('nav_about'); ?></button>
-    <div class="dropdown-content">
-       <a href="gallery.php" class="<?php echo $current_page == 'gallery.php' ? 'active' : ''; ?>">
-                           <?php echo __('nav_gallery'); ?>
-                        </a>
-   
-      <a href="contact.php" class="<?php echo $current_page == 'contact.php' ? 'active' : ''; ?>">
-                            <?php echo __('nav_contact'); ?>
-                        </a>
-                        <a href="about.php" class="<?php echo $current_page == 'about.php' ? 'active' : ''; ?>">
-                            <?php echo __('nav_about'); ?>
-                        </a>
-                        <a href="history.php" class="<?php echo $current_page == 'history.php' ? 'active' : ''; ?>">
-                            <?php echo __('nav_history'); ?>
-                        </a>
-                        <a href="mission.php" class="<?php echo $current_page == 'mission.php' ? 'active' : ''; ?>">
-                            <?php echo __('nav_mission'); ?>
-                        </a>
-    </div>
-  </div>
-</nav>
-                        
+                            <div class="dropdown">
+                                 <button class="dropbtn"><?php echo __('nav_about'); ?></button>
+                                 <div class="dropdown-content">
+                                    <a href="gallery.php" class="<?php echo $current_page == 'gallery.php' ? 'active' : ''; ?>">
+                                        <?php echo __('nav_gallery'); ?>
+                                    </a>
+                                    <a href="contact.php" class="<?php echo $current_page == 'contact.php' ? 'active' : ''; ?>">
+                                      <?php echo __('nav_contact'); ?>
+                                    </a>
+                                    <a href="about.php" class="<?php echo $current_page == 'about.php' ? 'active' : ''; ?>">
+                                        <?php echo __('nav_about'); ?>
+                                    </a>
+                                    <a href="history.php" class="<?php echo $current_page == 'history.php' ? 'active' : ''; ?>">
+                                        <?php echo __('nav_history'); ?>
+                                    </a>
+                                    <a href="mission.php" class="<?php echo $current_page == 'mission.php' ? 'active' : ''; ?>">
+                                        <?php echo __('nav_mission'); ?>
+                                    </a>
+                                </div>
+                            </div>
+                        </nav> 
                     </li>
                     <li>
                         <a href="academics.php" class="<?php echo $current_page == 'academics.php' ? 'active' : ''; ?>">
@@ -148,35 +146,32 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         </a>
                     </li>
                     <li class="dropdown">
-                     <button class="dropbtn">
-        <?php echo __('nav_studentservice')?>
-    </button>
-                    
-                    <div class="dropdown-content">
+                        <button class="dropbtn">
+                            <?php echo __('nav_studentservice')?>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="academic-advising.php">Academic Advising & Counseling</a>
 
+                            <a href="scholarship.php">Scholarships & Financial Support</a>
 
-                        <a href="academic-advising.php">Academic Advising & Counseling</a>
+                            <a href="health-services.php">Health Services</a>
 
-                        <a href="scholarship.php">Scholarships & Financial Support</a>
+                            <a href="housing.php">Student Housing & Accommodation</a>
 
-                        <a href="health-services.php">Health Services</a>
+                            <a href="career-development.php">Career Development Services</a>
 
-                        <a href="housing.php">Student Housing & Accommodation</a>
+                            <a href="clubs.php">Student Clubs & Organizations</a>
 
-                        <a href="career-development.php">Career Development Services</a>
+                            <a href="sports-recreation.php">Sports & Recreation</a>
 
-                        <a href="clubs.php">Student Clubs & Organizations</a>
+                            <a href="grievance.php">Grievance & Complaint Services</a>
 
-                        <a href="sports-recreation.php">Sports & Recreation</a>
+                            <a href="forms-documents.php">Forms & Documents</a>
 
-                        <a href="grievance.php">Grievance & Complaint Services</a>
+                            <a href="library-services.php">Library Services</a>
 
-                        <a href="forms-documents.php">Forms & Documents</a>
-
-                        <a href="library-services.php">Library Services</a>
-
-                     </div>
-</li>
+                        </div>
+                    </li>
                     <li>
                         <a href="staff.php" class="<?php echo $current_page == 'staff.php' ? 'active' : ''; ?>">
                             <?php echo __('nav_staff'); ?>
