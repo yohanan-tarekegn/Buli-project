@@ -169,12 +169,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
                             <?php echo __('nav_studentservice') ?>
                         </button>
                         <div class="dropdown-content">
-                            <a href="academic-advising.php" class="<?php echo $current_page == 'academic-advising.php' ? 'active' : ''; ?>">
-                                Academic Advising & Counseling</a>
-
-                            <a href="scholarship.php" class="<?php echo $current_page == 'scholarship.php' ? 'active' : ''; ?>">
-                                Scholarships & Financial Support</a>
-
                             <a href="health-services.php" class="<?php echo $current_page == 'health-services.php' ? 'active' : ''; ?>">
                                 Health Services</a>
 
@@ -186,15 +180,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
                             <a href="clubs.php" class="<?php echo $current_page == 'clubs.php' ? 'active' : ''; ?>">
                                 Student Clubs & Organizations</a>
-
-                            <a href="sports-recreation.php" class="<?php echo $current_page == 'sports-recreation.php' ? 'active' : ''; ?>">
-                                Sports & Recreation</a>
-
-                            <a href="grievance.php" class="<?php echo $current_page == 'grievance.php' ? 'active' : ''; ?>">
-                                Grievance & Complaint Services</a>
-
-                            <a href="forms-documents.php" class="<?php echo $current_page == 'forms-documents.php' ? 'active' : ''; ?>">
-                                Forms & Documents</a>
 
                             <a href="library-services.php" class="<?php echo $current_page == 'library-services.php' ? 'active' : ''; ?>">
                                 Library Services</a>
