@@ -1,607 +1,265 @@
 <?php
+/**
+ * staff.php — MGMBPTC Staff Directory
+ * Displays leadership, department heads, academic & administrative staff.
+ */
 $page_title = 'Staff Directory';
 require_once __DIR__ . '/includes/header.php';
 ?>
 
-<div class="page-header">
-    <h2>College Staff Directory</h2>
-</div>
-
+<!-- ====================================================
+     HERO BANNER
+     ==================================================== -->
 <section class="hero-staff">
-
-    <h1>Meet Our Leadership & Staff</h1>
-
-    <p>
-        Search and find information about MGMBPTC administrators,
-        department heads, instructors, and support staff.
-    </p>
-
+    <h1>Our Staff &amp; Leadership</h1>
+    <p>Meet the dedicated administrators, instructors, and support personnel of Melkegenet General &amp; Bibi Buli Polytechnic College.</p>
 </section>
 
-<!-- Directory Filtering Controls (Mockup Layout) -->
-<section class="card" style="margin-bottom: 2rem; background-color: #edf2f7;">
-    <h4 style="margin-bottom: 1rem;">Filter Directory</h4>
-    <form action="staff.php" method="GET" onsubmit="event.preventDefault();">
-        <div class="grid-3" style="margin-bottom: 0;">
-            <div class="form-group" style="margin-bottom: 0;">
-                <input type="text" id="staffSearch" class="form-control" placeholder="Search by name...">
-            </div>
-            
-            <div class="form-group" style="margin-bottom: 0;">
-                <select id="staffDeptFilter" class="form-control">
-                    <option value="">-- All Departments --</option>
-                    <option value="Administration">Administration</option>
-                    <option value="IT">Information Technology</option>
-                    <option value="Automotive">Automotive Technology</option>
-                    <option value="Electrical">Electrical & Electronics</option>
-                    <option value="Mechanical">Mechanical & Manufacturing</option>
-                </select>
-            </div>
-
-            <div style="display: flex; gap: 0.5rem;">
-                <button type="submit" class="btn" style="flex: 1;">Search</button>
-                <button type="reset" class="btn btn-secondary" onclick="document.getElementById('staffSearch').value=''; document.getElementById('staffDeptFilter').selectedIndex=0;">Reset</button>
-            </div>
+<!-- ====================================================
+     SEARCH / FILTER BAR
+     ==================================================== -->
+<section class="staff-filter-bar card">
+    <div class="staff-filter-inner">
+        <div class="form-group" style="margin:0; flex:1;">
+            <input type="text" id="staffSearch" class="form-control" placeholder="🔍  Search by name or role…" oninput="filterStaff()">
         </div>
-    </form>
-
-
-
-<!-- ================= LEADERSHIP TEAM ================= -->
-
-<section class="staff-section">
-
-<h2>Leadership Team</h2>
-
-<div class="staff-grid">
-
-
-<div class="staff-card">
-
-<img src="images/staff/dean.jpg" class="staff-photo">
-
-<h3>College Dean</h3>
-
-<h4>Dr. Abebe Kebede</h4>
-
-<p>
-Administration Department
-</p>
-
-<p>
-Educational Administration and Leadership
-</p>
-
-<a href="mailto:dean@mgmbptc.edu.et" class="email-btn">
-📧 Email
-</a>
-
-</div>
-
-
-
-<div class="staff-card">
-
-<img src="images/staff/academic.jpg" class="staff-photo">
-
-<h3>Academic Vice Dean</h3>
-
-<h4>Ato Tsegaye Mengistu</h4>
-
-<p>
-Administration Department
-</p>
-
-<p>
-Curriculum Development and Academic Affairs
-</p>
-
-<a href="mailto:academic@mgmbptc.edu.et" class="email-btn">
-📧 Email
-</a>
-
-</div>
-
-
-
-
-<div class="staff-card">
-
-<img src="images/staff/admin.jpg" class="staff-photo">
-
-<h3>Administrative Vice Dean</h3>
-
-<h4>W/ro Aster Almaz</h4>
-
-<p>
-Administration Department
-</p>
-
-<p>
-Human Resource Management
-</p>
-
-<a href="mailto:admin@mgmbptc.edu.et" class="email-btn">
-📧 Email
-</a>
-
-</div>
-
-
-</div>
-
+        <div class="form-group" style="margin:0;">
+            <select id="staffDeptFilter" class="form-control" onchange="filterStaff()">
+                <option value="">All Departments</option>
+                <option value="Administration">Administration</option>
+                <option value="Information Technology">Information Technology</option>
+                <option value="Automotive Technology">Automotive Technology</option>
+                <option value="Electrical &amp; Electronics">Electrical &amp; Electronics</option>
+                <option value="Mechanical &amp; Manufacturing">Mechanical &amp; Manufacturing</option>
+                <option value="Construction Technology">Construction Technology</option>
+                <option value="Student Affairs">Student Affairs</option>
+                <option value="Library">Library</option>
+            </select>
+        </div>
+        <button class="btn btn-secondary" onclick="resetFilter()" type="button">Reset</button>
+    </div>
+    <p id="staffNoResult" style="display:none; color:#c0392b; margin-top:0.75rem;">No staff members match your search.</p>
 </section>
 
-
-
-<!-- ================= DEPARTMENT HEADS ================= -->
-
-
-<section class="staff-section">
-
-<h2>Department Heads</h2>
-
-
-<div class="staff-grid">
-
-
-<div class="staff-card">
-
-<img src="images/staff/it.jpg" class="staff-photo">
-
-<h3>Department Head</h3>
-
-<h4>Ato Yohannes Bekele</h4>
-
-<p>
-Information Technology
-</p>
-
-<p>
-Database and Networking Specialist
-</p>
-
-<a href="mailto:it@mgmbptc.edu.et" class="email-btn">
-📧 Email
-</a>
-
-</div>
-
-
-
-
-<div class="staff-card">
-
-<img src="images/staff/auto.jpg" class="staff-photo">
-
-<h3>Department Head</h3>
-
-<h4>Ato Mulugeta Tadesse</h4>
-
-<p>
-Automotive Technology
-</p>
-
-<p>
-Automotive Diagnostics Expert
-</p>
-
-<a href="mailto:auto@mgmbptc.edu.et" class="email-btn">
-📧 Email
-</a>
-
-</div>
-
-
-
-
-<div class="staff-card">
-
-<img src="images/staff/electrical.jpg" class="staff-photo">
-
-<h3>Department Head</h3>
-
-<h4>W/t Kidist Daniel</h4>
-
-<p>
-Electrical & Electronics
-</p>
-
-<p>
-Embedded Systems
-</p>
-
-<a href="mailto:electrical@mgmbptc.edu.et" class="email-btn">
-📧 Email
-</a>
-
-</div>
-<!-- Construction Technology Head -->
-
-<div class="staff-card"
-data-name="Construction Technology Department Head"
-data-department="Construction Technology">
-
-
-<img src="images/staff/construction.jpg"
-class="staff-photo"
-alt="Construction Head">
-
-
-<h3>
-Department Head
-</h3>
-
-
-<h4>
-Construction Technology
-</h4>
-
-
-<p>
-Building Construction and Engineering
-</p>
-
-
-<p>
-Construction Design Specialist
-</p>
-
-
-<a href="mailto:construction@mgmbptc.edu.et"
-class="email-btn">
-
-📧 Email
-
-</a>
-
-
-</div>
-
-
-
-
-
-<!-- Mechanical Manufacturing Head -->
-
-<div class="staff-card"
-data-name="Mechanical Manufacturing Department Head"
-data-department="Mechanical & Manufacturing">
-
-
-<img src="images/staff/mechanical.jpg"
-class="staff-photo"
-alt="Mechanical Head">
-
-
-<h3>
-Department Head
-</h3>
-
-
-<h4>
-Mechanical & Manufacturing Technology
-</h4>
-
-
-<p>
-Manufacturing Systems and CAD Design
-</p>
-
-
-<p>
-Workshop and Production Specialist
-</p>
-
-
-<a href="mailto:mechanical@mgmbptc.edu.et"
-class="email-btn">
-
-📧 Email
-
-</a>
-
-
-</div>
-
-
-</div>
-
+<!-- ====================================================
+     SECTION 1 — LEADERSHIP TEAM
+     ==================================================== -->
+<section class="staff-section" id="section-leadership">
+    <h2 class="staff-section-title">
+        <span class="section-icon">🏛️</span> Leadership Team
+    </h2>
+    <div class="staff-grid" id="grid-leadership">
+
+        <div class="staff-card" data-name="dr abebe kebede" data-dept="Administration">
+            <div class="staff-photo-wrap">
+                <img src="images/staff/dean.jpg" alt="College Dean" class="staff-photo" onerror="this.onerror=null;this.src='images/placeholder_staff.png'">
+            </div>
+            <span class="staff-role-badge">College Dean</span>
+            <h3 class="staff-name">Dr. Abebe Kebede</h3>
+            <p class="staff-dept">Administration</p>
+            <p class="staff-spec">Educational Administration &amp; Leadership</p>
+            <a href="mailto:dean@mgmbptc.edu.et" class="staff-email-btn">✉ dean@mgmbptc.edu.et</a>
+        </div>
+
+        <div class="staff-card" data-name="ato tsegaye mengistu" data-dept="Administration">
+            <div class="staff-photo-wrap">
+                <img src="images/staff/academic.jpg" alt="Academic Vice Dean" class="staff-photo" onerror="this.onerror=null;this.src='images/placeholder_staff.png'">
+            </div>
+            <span class="staff-role-badge">Academic Vice Dean</span>
+            <h3 class="staff-name">Ato Tsegaye Mengistu</h3>
+            <p class="staff-dept">Administration</p>
+            <p class="staff-spec">Curriculum Development &amp; Academic Affairs</p>
+            <a href="mailto:academic@mgmbptc.edu.et" class="staff-email-btn">✉ academic@mgmbptc.edu.et</a>
+        </div>
+
+        <div class="staff-card" data-name="w/ro aster almaz" data-dept="Administration">
+            <div class="staff-photo-wrap">
+                <img src="images/staff/admin.jpg" alt="Administrative Vice Dean" class="staff-photo" onerror="this.onerror=null;this.src='images/placeholder_staff.png'">
+            </div>
+            <span class="staff-role-badge">Administrative Vice Dean</span>
+            <h3 class="staff-name">W/ro Aster Almaz</h3>
+            <p class="staff-dept">Administration</p>
+            <p class="staff-spec">Human Resource Management</p>
+            <a href="mailto:admin@mgmbptc.edu.et" class="staff-email-btn">✉ admin@mgmbptc.edu.et</a>
+        </div>
+
+    </div>
 </section>
 
+<!-- ====================================================
+     SECTION 2 — DEPARTMENT HEADS
+     ==================================================== -->
+<section class="staff-section" id="section-dept-heads">
+    <h2 class="staff-section-title">
+        <span class="section-icon">📐</span> Department Heads
+    </h2>
+    <div class="staff-grid" id="grid-dept-heads">
 
+        <div class="staff-card" data-name="ato yohannes bekele" data-dept="Information Technology">
+            <div class="staff-photo-wrap">
+                <img src="images/staff/it.jpg" alt="IT Dept Head" class="staff-photo" onerror="this.onerror=null;this.src='images/placeholder_staff.png'">
+            </div>
+            <span class="staff-role-badge">Department Head</span>
+            <h3 class="staff-name">Ato Yohannes Bekele</h3>
+            <p class="staff-dept">Information Technology</p>
+            <p class="staff-spec">Database Administration &amp; Networking</p>
+            <a href="mailto:it@mgmbptc.edu.et" class="staff-email-btn">✉ it@mgmbptc.edu.et</a>
+        </div>
 
+        <div class="staff-card" data-name="ato mulugeta tadesse" data-dept="Automotive Technology">
+            <div class="staff-photo-wrap">
+                <img src="images/staff/auto.jpg" alt="Automotive Dept Head" class="staff-photo" onerror="this.onerror=null;this.src='images/placeholder_staff.png'">
+            </div>
+            <span class="staff-role-badge">Department Head</span>
+            <h3 class="staff-name">Ato Mulugeta Tadesse</h3>
+            <p class="staff-dept">Automotive Technology</p>
+            <p class="staff-spec">Automotive Diagnostics Expert</p>
+            <a href="mailto:auto@mgmbptc.edu.et" class="staff-email-btn">✉ auto@mgmbptc.edu.et</a>
+        </div>
 
-<!-- ================= ACADEMIC STAFF ================= -->
+        <div class="staff-card" data-name="w/t kidist daniel" data-dept="Electrical &amp; Electronics">
+            <div class="staff-photo-wrap">
+                <img src="images/staff/electrical.jpg" alt="Electrical Dept Head" class="staff-photo" onerror="this.onerror=null;this.src='images/placeholder_staff.png'">
+            </div>
+            <span class="staff-role-badge">Department Head</span>
+            <h3 class="staff-name">W/t Kidist Daniel</h3>
+            <p class="staff-dept">Electrical &amp; Electronics</p>
+            <p class="staff-spec">Embedded Systems Specialist</p>
+            <a href="mailto:electrical@mgmbptc.edu.et" class="staff-email-btn">✉ electrical@mgmbptc.edu.et</a>
+        </div>
 
+        <div class="staff-card" data-name="construction technology head" data-dept="Construction Technology">
+            <div class="staff-photo-wrap">
+                <img src="images/staff/construction.jpg" alt="Construction Dept Head" class="staff-photo" onerror="this.onerror=null;this.src='images/placeholder_staff.png'">
+            </div>
+            <span class="staff-role-badge">Department Head</span>
+            <h3 class="staff-name">Construction Technology Dept.</h3>
+            <p class="staff-dept">Construction Technology</p>
+            <p class="staff-spec">Building Construction &amp; Engineering</p>
+            <a href="mailto:construction@mgmbptc.edu.et" class="staff-email-btn">✉ construction@mgmbptc.edu.et</a>
+        </div>
 
-<section class="staff-section">
+        <div class="staff-card" data-name="mechanical manufacturing head" data-dept="Mechanical &amp; Manufacturing">
+            <div class="staff-photo-wrap">
+                <img src="images/staff/mechanical.jpg" alt="Mechanical Dept Head" class="staff-photo" onerror="this.onerror=null;this.src='images/placeholder_staff.png'">
+            </div>
+            <span class="staff-role-badge">Department Head</span>
+            <h3 class="staff-name">Mechanical &amp; Manufacturing Dept.</h3>
+            <p class="staff-dept">Mechanical &amp; Manufacturing</p>
+            <p class="staff-spec">Manufacturing Systems &amp; CAD Design</p>
+            <a href="mailto:mechanical@mgmbptc.edu.et" class="staff-email-btn">✉ mechanical@mgmbptc.edu.et</a>
+        </div>
 
-<h2>Academic Staff</h2>
-
-
-<div class="staff-grid">
-
-
-<div class="staff-card">
-
-<img src="images/staff/instructor1.jpg" class="staff-photo">
-
-<h3>Instructor</h3>
-
-<h4>Sample Instructor</h4>
-
-<p>
-Information Technology
-</p>
-
-<p>
-Software Development
-</p>
-
-<a href="mailto:staff@mgmbptc.edu.et" class="email-btn">
-📧 Email
-</a>
-
-</div>
-
-
-
-<div class="staff-card">
-
-<img src="img.jpg" class="staff-photo">
-
-<h3>Instructor</h3>
-
-<h4>Sample Instructor</h4>
-
-<p>
-Mechanical Technology
-</p>
-
-<p>
-Manufacturing Specialist
-</p>
-
-<a href="mailto:staff2@mgmbptc.edu.et" class="email-btn">
-📧 Email
-</a>
-
-</div>
-
-
-</div>
-
+    </div>
 </section>
 
+<!-- ====================================================
+     SECTION 3 — ACADEMIC STAFF
+     ==================================================== -->
+<section class="staff-section" id="section-academic">
+    <h2 class="staff-section-title">
+        <span class="section-icon">🎓</span> Academic Staff
+    </h2>
+    <div class="staff-grid" id="grid-academic">
 
+        <div class="staff-card" data-name="sample instructor it" data-dept="Information Technology">
+            <div class="staff-photo-wrap">
+                <img src="images/staff/instructor1.jpg" alt="IT Instructor" class="staff-photo" onerror="this.onerror=null;this.src='images/placeholder_staff.png'">
+            </div>
+            <span class="staff-role-badge">Instructor</span>
+            <h3 class="staff-name">IT Instructor</h3>
+            <p class="staff-dept">Information Technology</p>
+            <p class="staff-spec">Software Development</p>
+            <a href="mailto:staff@mgmbptc.edu.et" class="staff-email-btn">✉ staff@mgmbptc.edu.et</a>
+        </div>
 
+        <div class="staff-card" data-name="sample instructor mechanical" data-dept="Mechanical &amp; Manufacturing">
+            <div class="staff-photo-wrap">
+                <img src="images/staff/instructor2.jpg" alt="Mechanical Instructor" class="staff-photo" onerror="this.onerror=null;this.src='images/placeholder_staff.png'">
+            </div>
+            <span class="staff-role-badge">Instructor</span>
+            <h3 class="staff-name">Mechanical Instructor</h3>
+            <p class="staff-dept">Mechanical &amp; Manufacturing</p>
+            <p class="staff-spec">Manufacturing Specialist</p>
+            <a href="mailto:staff2@mgmbptc.edu.et" class="staff-email-btn">✉ staff2@mgmbptc.edu.et</a>
+        </div>
 
-<!-- ================= ADMINISTRATIVE STAFF ================= -->
-
-
-<section class="staff-section">
-
-<h2>Administrative Staff</h2>
-
-
-<div class="staff-grid">
-
-
-<div class="staff-card">
-
-<img src="imgage.jpg" class="staff-photo">
-
-<h3>Registrar</h3>
-
-<h4>Sample Name</h4>
-
-<p>
-Student Affairs Office
-</p>
-
-
-<a href="mailto:registrar@mgmbptc.edu.et" class="email-btn">
-📧 Email
-</a>
-
-</div>
-
-
-
-<div class="staff-card">
-
-<img src="images/staff/library.jpg" class="staff-photo">
-
-<h3>Librarian</h3>
-
-<h4>Sample Name</h4>
-
-<p>
-Library Service
-</p>
-
-
-<a href="mailto:library@mgmbptc.edu.et" class="email-btn">
-📧 Email
-</a>
-
-</div>
-
-
-</div>
-
+    </div>
 </section>
 
+<!-- ====================================================
+     SECTION 4 — ADMINISTRATIVE STAFF
+     ==================================================== -->
+<section class="staff-section" id="section-admin">
+    <h2 class="staff-section-title">
+        <span class="section-icon">📋</span> Administrative Staff
+    </h2>
+    <div class="staff-grid" id="grid-admin">
 
+        <div class="staff-card" data-name="registrar student affairs" data-dept="Student Affairs">
+            <div class="staff-photo-wrap">
+                <img src="images/staff/registrar.jpg" alt="Registrar" class="staff-photo" onerror="this.onerror=null;this.src='images/placeholder_staff.png'">
+            </div>
+            <span class="staff-role-badge">Registrar</span>
+            <h3 class="staff-name">Office of the Registrar</h3>
+            <p class="staff-dept">Student Affairs</p>
+            <p class="staff-spec">Student Records &amp; Enrollment</p>
+            <a href="mailto:registrar@mgmbptc.edu.et" class="staff-email-btn">✉ registrar@mgmbptc.edu.et</a>
+        </div>
 
-<!-- ================= CSS ================= -->
+        <div class="staff-card" data-name="librarian library" data-dept="Library">
+            <div class="staff-photo-wrap">
+                <img src="images/staff/library.jpg" alt="Librarian" class="staff-photo" onerror="this.onerror=null;this.src='images/placeholder_staff.png'">
+            </div>
+            <span class="staff-role-badge">Librarian</span>
+            <h3 class="staff-name">College Librarian</h3>
+            <p class="staff-dept">Library</p>
+            <p class="staff-spec">Information &amp; Library Services</p>
+            <a href="mailto:library@mgmbptc.edu.et" class="staff-email-btn">✉ library@mgmbptc.edu.et</a>
+        </div>
 
+    </div>
+</section>
 
-<style>
+<!-- ====================================================
+     LIVE SEARCH JAVASCRIPT
+     ==================================================== -->
+<script>
+function filterStaff() {
+    const query  = document.getElementById('staffSearch').value.toLowerCase().trim();
+    const dept   = document.getElementById('staffDeptFilter').value.toLowerCase().trim();
+    const cards  = document.querySelectorAll('.staff-card');
+    let   visible = 0;
 
+    cards.forEach(function(card) {
+        const name     = (card.dataset.name || '').toLowerCase();
+        const cardDept = (card.dataset.dept || '').toLowerCase();
 
-.hero-staff{
+        const matchName = !query || name.includes(query);
+        const matchDept = !dept  || cardDept.includes(dept.replace('&amp;', '&').replace('&#38;','&'));
 
-text-align:center;
+        if (matchName && matchDept) {
+            card.style.display = '';
+            visible++;
+        } else {
+            card.style.display = 'none';
+        }
+    });
 
-padding:5px;
+    // Hide entire section if all its cards are hidden
+    document.querySelectorAll('.staff-section').forEach(function(sec) {
+        const anyVisible = Array.from(sec.querySelectorAll('.staff-card')).some(c => c.style.display !== 'none');
+        sec.style.display = anyVisible ? '' : 'none';
+    });
 
-background:#003366;
-
-color:white;
-
-border-radius:15px;
-
+    document.getElementById('staffNoResult').style.display = visible === 0 ? 'block' : 'none';
 }
 
-
-.hero-staff h1{
-
-font-size:40px;
-
+function resetFilter() {
+    document.getElementById('staffSearch').value = '';
+    document.getElementById('staffDeptFilter').selectedIndex = 0;
+    filterStaff();
 }
+</script>
 
-
-
-.staff-section{
-
-margin:60px 0;
-
-}
-
-
-
-.staff-section h2{
-
-text-align:center;
-
-color:#003366;
-
-font-size:32px;
-
-margin-bottom:30px;
-
-}
-
-
-
-.staff-grid{
-
-display:grid;
-
-grid-template-columns:
-repeat(auto-fit,minmax(280px,1fr));
-
-gap:30px;
-
-}
-
-
-
-.staff-card{
-
-background:white;
-
-padding:25px;
-
-text-align:center;
-
-border-radius:20px;
-
-box-shadow:0 8px 20px rgba(0,0,0,.12);
-
-transition:.3s;
-
-}
-
-
-
-.staff-card:hover{
-
-transform:translateY(-10px);
-
-}
-
-
-
-.staff-photo{
-
-width:150px;
-
-height:150px;
-
-border-radius:50%;
-
-object-fit:cover;
-
-border:5px solid #003366;
-
-}
-
-
-
-.staff-card h3{
-
-color:#0066cc;
-
-margin-top:20px;
-
-}
-
-
-
-.staff-card h4{
-
-font-size:20px;
-
-}
-
-
-
-.email-btn{
-
-display:inline-block;
-
-margin-top:15px;
-
-background:#0066cc;
-
-color:white;
-
-padding:12px 25px;
-
-border-radius:30px;
-
-text-decoration:none;
-
-}
-
-
-
-.email-btn:hover{
-
-background:#003366;
-
-}
-
-
-
-@media(max-width:600px){
-
-.hero-staff h1{
-
-font-size:28px;
-
-}
-
-}
-
-
-</style>
-
-
-<?php
-require_once __DIR__ . '/includes/footer.php';
-?>
-          
+<?php require_once __DIR__ . '/includes/footer.php'; ?>

@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <style>
     .admission-header {
-        background: #1a365d;
+        background: #1e3f20;
         color: #fff;
         padding: 3rem 2rem;
         border-radius: 8px;
@@ -123,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         transition: all 0.2s;
     }
     .wizard-step.active {
-        background: #1a365d;
+        background: #1e3f20;
         color: #fff;
     }
     .wizard-step.completed {
@@ -244,7 +244,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </ul>
             </div>
             
-            <h4 style="color: #1a365d; font-size: 1rem; margin-bottom: 0.5rem;">Available Categories &amp; Programs</h4>
+            <h4 style="color: #1e3f20; font-size: 1rem; margin-bottom: 0.5rem;">Available Categories &amp; Programs</h4>
             <p style="font-size: 0.85rem; color: #4a5568; line-height: 1.5; margin-bottom: 1rem;">
                 <strong>TVET Levels:</strong> Level 1 up to Level 5 (Advanced Diploma) in engineering &amp; technology fields.<br>
                 <strong>Undergraduate (BSc):</strong> Regular degree programs for academic matriculation qualifiers.<br>

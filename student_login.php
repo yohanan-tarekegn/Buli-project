@@ -67,7 +67,7 @@ require_once __DIR__ . '/includes/header.php';
         box-shadow: 0 4px 10px rgba(0,0,0,0.06);
     }
     .login-card h2 {
-        color: #1a365d;
+        color: #1e3f20;
         font-size: 1.4rem;
         margin-bottom: 0.4rem;
         text-align: center;
@@ -100,12 +100,12 @@ require_once __DIR__ . '/includes/header.php';
     }
     .form-control-login:focus {
         outline: none;
-        border-color: #1a365d;
+        border-color: #1e3f20;
     }
     .btn-login {
         width: 100%;
         padding: 0.75rem;
-        background-color: #1a365d;
+        background-color: #1e3f20;
         color: #fff;
         border: none;
         border-radius: 4px;

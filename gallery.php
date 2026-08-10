@@ -62,7 +62,7 @@ if (empty($gallery_items)) {
     }
     .gallery-media-placeholder {
         height: 200px;
-        background: #1a365d;
+        background: #1e3f20;
         color: #fff;
         display: flex;
         flex-direction: column;

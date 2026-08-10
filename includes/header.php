@@ -4,6 +4,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $lang; ?>">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +12,10 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <link rel="stylesheet" href="css/style.css">
     <style>
         /* Login dropdown */
-        .login-dropdown { position: relative; }
+        .login-dropdown {
+            position: relative;
+        }
+
         .login-btn {
             background-color: var(--accent-color);
             color: #1a202c;
@@ -23,7 +27,11 @@ $current_page = basename($_SERVER['PHP_SELF']);
             cursor: pointer;
             white-space: nowrap;
         }
-        .login-btn:hover { background-color: #ecc94b; }
+
+        .login-btn:hover {
+            background-color: #ecc94b;
+        }
+
         .dropdown-menu {
             display: none;
             position: absolute;
@@ -33,11 +41,15 @@ $current_page = basename($_SERVER['PHP_SELF']);
             border: 1px solid #cbd5e0;
             border-radius: 4px;
             min-width: 180px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
             z-index: 999;
         }
+
         .login-dropdown:hover .dropdown-menu,
-        .login-dropdown:focus-within .dropdown-menu { display: block; }
+        .login-dropdown:focus-within .dropdown-menu {
+            display: block;
+        }
+
         .dropdown-menu a {
             display: block;
             padding: 0.7rem 1rem;
@@ -46,11 +58,22 @@ $current_page = basename($_SERVER['PHP_SELF']);
             border-bottom: 1px solid #e2e8f0;
             text-decoration: none;
         }
-        .dropdown-menu a:last-child { border-bottom: none; }
-        .dropdown-menu a:hover { background-color: #ebf8ff; color: #1a365d; }
-        .dropdown-menu .icon { margin-right: 0.4rem; }
+
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #ebf8ff;
+            color: #1e3f20;
+        }
+
+        .dropdown-menu .icon {
+            margin-right: 0.4rem;
+        }
     </style>
 </head>
+
 <body>
 
     <!-- Header section -->
@@ -58,14 +81,14 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <div class="header-container">
             <div class="logo-area">
                 <a href="index.php" class="logo-link">
-                    <div class="logo-placeholder">M.G.M.B.P.T.C</div>
+                    <img src="includes/images.jpg" alt="College Logo" class="logo-img">
                     <div class="logo-text">
                         <h1><?php echo __('college_name'); ?></h1>
                         <p class="tagline"><?php echo __('motto'); ?></p>
                     </div>
                 </a>
             </div>
-            
+
             <div class="top-utils">
                 <!-- Language Switcher -->
                 <div class="lang-switcher">
@@ -91,7 +114,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 </button>
             </div>
         </div>
-        
+
         <!-- Navigation bar -->
         <nav class="navbar" id="navbar">
             <div class="nav-container">
@@ -101,29 +124,25 @@ $current_page = basename($_SERVER['PHP_SELF']);
                             <?php echo __('nav_home'); ?>
                         </a>
                     </li>
-                    <li>
-                        <nav>
-                            <div class="dropdown">
-                                 <button class="dropbtn"><?php echo __('nav_about'); ?></button>
-                                 <div class="dropdown-content">
-                                    <a href="gallery.php" class="<?php echo $current_page == 'gallery.php' ? 'active' : ''; ?>">
-                                        <?php echo __('nav_gallery'); ?>
-                                    </a>
-                                    <a href="contact.php" class="<?php echo $current_page == 'contact.php' ? 'active' : ''; ?>">
-                                      <?php echo __('nav_contact'); ?>
-                                    </a>
-                                    <a href="about.php" class="<?php echo $current_page == 'about.php' ? 'active' : ''; ?>">
-                                        <?php echo __('nav_about'); ?>
-                                    </a>
-                                    <a href="history.php" class="<?php echo $current_page == 'history.php' ? 'active' : ''; ?>">
-                                        <?php echo __('nav_history'); ?>
-                                    </a>
-                                    <a href="mission.php" class="<?php echo $current_page == 'mission.php' ? 'active' : ''; ?>">
-                                        <?php echo __('nav_mission'); ?>
-                                    </a>
-                                </div>
-                            </div>
-                        </nav> 
+                    <li class="dropdown">
+                        <button class="dropbtn"><?php echo __('nav_about'); ?></button>
+                        <div class="dropdown-content">
+                            <a href="gallery.php" class="<?php echo $current_page == 'gallery.php' ? 'active' : ''; ?>">
+                                <?php echo __('nav_gallery'); ?>
+                            </a>
+                            <a href="contact.php" class="<?php echo $current_page == 'contact.php' ? 'active' : ''; ?>">
+                                <?php echo __('nav_contact'); ?>
+                            </a>
+                            <a href="about.php" class="<?php echo $current_page == 'about.php' ? 'active' : ''; ?>">
+                                <?php echo __('nav_about'); ?>
+                            </a>
+                            <a href="history.php" class="<?php echo $current_page == 'history.php' ? 'active' : ''; ?>">
+                                <?php echo __('nav_history'); ?>
+                            </a>
+                            <a href="mission.php" class="<?php echo $current_page == 'mission.php' ? 'active' : ''; ?>">
+                                <?php echo __('nav_mission'); ?>
+                            </a>
+                        </div>
                     </li>
                     <li>
                         <a href="academics.php" class="<?php echo $current_page == 'academics.php' ? 'active' : ''; ?>">
@@ -147,28 +166,38 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     </li>
                     <li class="dropdown">
                         <button class="dropbtn">
-                            <?php echo __('nav_studentservice')?>
+                            <?php echo __('nav_studentservice') ?>
                         </button>
                         <div class="dropdown-content">
-                            <a href="academic-advising.php">Academic Advising & Counseling</a>
+                            <a href="academic-advising.php" class="<?php echo $current_page == 'academic-advising.php' ? 'active' : ''; ?>">
+                                Academic Advising & Counseling</a>
 
-                            <a href="scholarship.php">Scholarships & Financial Support</a>
+                            <a href="scholarship.php" class="<?php echo $current_page == 'scholarship.php' ? 'active' : ''; ?>">
+                                Scholarships & Financial Support</a>
 
-                            <a href="health-services.php">Health Services</a>
+                            <a href="health-services.php" class="<?php echo $current_page == 'health-services.php' ? 'active' : ''; ?>">
+                                Health Services</a>
 
-                            <a href="housing.php">Student Housing & Accommodation</a>
+                            <a href="housing.php" class="<?php echo $current_page == 'housing.php' ? 'active' : ''; ?>">
+                                Student Housing & Accommodation</a>
 
-                            <a href="career-development.php">Career Development Services</a>
+                            <a href="career-development.php" class="<?php echo $current_page == 'career-development.php' ? 'active' : ''; ?>">
+                                Career Development Services</a>
 
-                            <a href="clubs.php">Student Clubs & Organizations</a>
+                            <a href="clubs.php" class="<?php echo $current_page == 'clubs.php' ? 'active' : ''; ?>">
+                                Student Clubs & Organizations</a>
 
-                            <a href="sports-recreation.php">Sports & Recreation</a>
+                            <a href="sports-recreation.php" class="<?php echo $current_page == 'sports-recreation.php' ? 'active' : ''; ?>">
+                                Sports & Recreation</a>
 
-                            <a href="grievance.php">Grievance & Complaint Services</a>
+                            <a href="grievance.php" class="<?php echo $current_page == 'grievance.php' ? 'active' : ''; ?>">
+                                Grievance & Complaint Services</a>
 
-                            <a href="forms-documents.php">Forms & Documents</a>
+                            <a href="forms-documents.php" class="<?php echo $current_page == 'forms-documents.php' ? 'active' : ''; ?>">
+                                Forms & Documents</a>
 
-                            <a href="library-services.php">Library Services</a>
+                            <a href="library-services.php" class="<?php echo $current_page == 'library-services.php' ? 'active' : ''; ?>">
+                                Library Services</a>
 
                         </div>
                     </li>

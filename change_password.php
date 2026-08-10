@@ -88,7 +88,7 @@ require_once __DIR__ . '/includes/header.php';
         margin-bottom: 0.25rem;
     }
     .change-card h2 {
-        color: #1a365d;
+        color: #1e3f20;
         font-size: 1.4rem;
         margin-bottom: 0.4rem;
         text-align: center;
@@ -121,7 +121,7 @@ require_once __DIR__ . '/includes/header.php';
     }
     .form-control-cp:focus {
         outline: none;
-        border-color: #1a365d;
+        border-color: #1e3f20;
     }
     /* Password strength indicator */
     .strength-bar {
@@ -144,7 +144,7 @@ require_once __DIR__ . '/includes/header.php';
     .btn-change {
         width: 100%;
         padding: 0.75rem;
-        background-color: #1a365d;
+        background-color: #1e3f20;
         color: #fff;
         border: none;
         border-radius: 4px;

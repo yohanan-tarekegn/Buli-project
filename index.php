@@ -1,15 +1,18 @@
- <?php
+<?php
 $page_title = 'Home';
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/db.php';
 
-$title_field = ($lang === 'am') ? 'title_am' : 'title_en';
-$content_field = ($lang === 'am') ? 'content_am' : 'content_en';
+/** @var string $lang */
+$current_lang = $lang ?? 'en';
+$title_field = ($current_lang === 'am') ? 'title_am' : 'title_en';
+$content_field = ($current_lang === 'am') ? 'content_am' : 'content_en';
 
 $announcements = [];
 $news = [];
 
-if ($pdo) {
+/** @var PDO|null $pdo */
+if (isset($pdo) && $pdo instanceof PDO) {
     try {
         $ann_stmt = $pdo->query("SELECT * FROM news_events WHERE type = 'announcement' ORDER BY date_posted DESC LIMIT 3");
         $announcements = $ann_stmt->fetchAll();
@@ -20,6 +23,7 @@ if ($pdo) {
         // Fallback to static
     }
 }
+
 
 // Fallback static arrays if database query returns empty
 if (empty($announcements)) {

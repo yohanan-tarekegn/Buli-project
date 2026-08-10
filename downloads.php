@@ -51,10 +51,10 @@ foreach ($download_items as $item) {
         margin-bottom: 2.5rem;
     }
     .category-title {
-        color: #1a365d;
+        color: #1e3f20;
         font-size: 1.3rem;
         margin-bottom: 1rem;
-        border-bottom: 2px solid #d69e2e;
+        border-bottom: 2px solid #d4af37;
         padding-bottom: 0.4rem;
         display: flex;
         align-items: center;
@@ -86,7 +86,7 @@ foreach ($download_items as $item) {
         line-height: 1.4;
     }
     .btn-dl {
-        background-color: #1a365d;
+        background-color: #1e3f20;
         color: #fff;
         padding: 0.5rem 1rem;
         border-radius: 4px;

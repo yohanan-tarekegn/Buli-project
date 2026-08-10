@@ -5,7 +5,7 @@ require_once __DIR__ . '/includes/header.php';
 
 <style>
     .lms-hero {
-        background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 100%);
+        background: linear-gradient(135deg, #1e3f20 0%, #2b6cb0 100%);
         color: #fff;
         padding: 4rem 2rem;
         text-align: center;
@@ -94,7 +94,7 @@ require_once __DIR__ . '/includes/header.php';
     .btn-enroll {
         display: inline-block;
         padding: 0.5rem 1rem;
-        background-color: #1a365d;
+        background-color: #1e3f20;
         color: #fff;
         font-size: 0.85rem;
         font-weight: bold;
@@ -115,7 +115,7 @@ require_once __DIR__ . '/includes/header.php';
         align-self: start;
     }
     .lms-login-card h3 {
-        color: #1a365d;
+        color: #1e3f20;
         font-size: 1.25rem;
         margin-bottom: 1rem;
         border-bottom: 2px solid #e2e8f0;
@@ -155,7 +155,7 @@ require_once __DIR__ . '/includes/header.php';
         transition: background 0.2s;
     }
     .btn-lms-login:hover {
-        background-color: #d69e2e;
+        background-color: #d4af37;
     }
     .moodle-notice {
         font-size: 0.8rem;
@@ -175,7 +175,7 @@ require_once __DIR__ . '/includes/header.php';
 <div class="lms-grid">
     <!-- Courses Column -->
     <div>
-        <h3 style="color: #1a365d; font-size: 1.3rem; margin-bottom: 1.25rem;">Featured Active Courses</h3>
+        <h3 style="color: #1e3f20; font-size: 1.3rem; margin-bottom: 1.25rem;">Featured Active Courses</h3>
         
         <div class="course-card-grid">
             <div class="course-card">

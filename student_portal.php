@@ -295,9 +295,9 @@ if (count($cgpa_progression) > 0) {
         
         <!-- Points & Tooltips -->
         <?php foreach ($points as $p): ?>
-            <circle cx="<?php echo $p['x']; ?>" cy="<?php echo $p['y']; ?>" r="5" fill="#1a365d" stroke="#fff" stroke-width="2" />
+            <circle cx="<?php echo $p['x']; ?>" cy="<?php echo $p['y']; ?>" r="5" fill="#1e3f20" stroke="#fff" stroke-width="2" />
             <!-- CGPA text value above node -->
-            <text x="<?php echo $p['x']; ?>" y="<?php echo $p['y'] - 11; ?>" font-size="10.5" font-weight="bold" fill="#1a365d" text-anchor="middle"><?php echo number_format($p['val'], 2); ?></text>
+            <text x="<?php echo $p['x']; ?>" y="<?php echo $p['y'] - 11; ?>" font-size="10.5" font-weight="bold" fill="#1e3f20" text-anchor="middle"><?php echo number_format($p['val'], 2); ?></text>
             <!-- Semester labels on X axis -->
             <text x="<?php echo $p['x']; ?>" y="<?php echo $y_end + 18; ?>" font-size="9" font-weight="bold" fill="#718096" text-anchor="middle"><?php echo htmlspecialchars($p['sem']); ?></text>
         <?php endforeach; ?>
@@ -320,7 +320,7 @@ if (count($cgpa_progression) > 0) {
         justify-content: space-between;
         align-items: center;
         margin-bottom: 2rem;
-        background: #1a365d;
+        background: #1e3f20;
         color: #fff;
         padding: 1.5rem 2rem;
         border-radius: 6px;
@@ -359,9 +359,9 @@ if (count($cgpa_progression) > 0) {
         box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     }
     .profile-card h3 {
-        color: #1a365d;
+        color: #1e3f20;
         margin-bottom: 1.25rem;
-        border-bottom: 2px solid #1a365d;
+        border-bottom: 2px solid #1e3f20;
         padding-bottom: 0.5rem;
         font-size: 1.1rem;
     }
@@ -402,9 +402,9 @@ if (count($cgpa_progression) > 0) {
         box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     }
     .content-card h3 {
-        color: #1a365d;
+        color: #1e3f20;
         margin-bottom: 1.25rem;
-        border-bottom: 2px solid #1a365d;
+        border-bottom: 2px solid #1e3f20;
         padding-bottom: 0.5rem;
         font-size: 1.15rem;
     }
@@ -425,7 +425,7 @@ if (count($cgpa_progression) > 0) {
     }
     .acad-card h4 {
         font-size: 1.8rem;
-        color: #1a365d;
+        color: #1e3f20;
         margin-bottom: 0.25rem;
         font-weight: 800;
     }
@@ -473,11 +473,11 @@ if (count($cgpa_progression) > 0) {
         margin-bottom: -2px;
     }
     .portal-tab-btn:hover {
-        color: #1a365d;
+        color: #1e3f20;
         background: #f7fafc;
     }
     .portal-tab-btn.active {
-        color: #1a365d;
+        color: #1e3f20;
         background: #fff;
         border-color: #cbd5e0 #cbd5e0 #fff #cbd5e0;
         border-bottom-color: #fff;
@@ -706,14 +706,40 @@ if (count($cgpa_progression) > 0) {
                     
                     <!-- CGPA Progress Graph -->
                     <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 1.25rem; margin-bottom: 2rem; background: #fafafb;">
-                        <h4 style="color:#1a365d; font-size: 1rem; margin-bottom: 1rem; text-align: center;">📈 Cumulative GPA Progression Chart</h4>
+                        <h4 style="color:#1e3f20; font-size: 1rem; margin-bottom: 1rem; text-align: center;">📈 Cumulative GPA Progression Chart</h4>
                         <div style="max-width: 500px; margin: 0 auto;">
-                            <?php echo $chart_svg; ?>
+                            <canvas id="cgpaChart"></canvas>
                         </div>
+                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                        <script>
+                        const ctx = document.getElementById('cgpaChart').getContext('2d');
+                        const labels = <?php echo json_encode(array_keys($semesters_data)); ?>;
+                        const dataPoints = <?php echo json_encode(array_map(function($s){ return $s['gpa']; }, $semesters_data)); ?>;
+                        new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: 'CGPA',
+                                    data: dataPoints,
+                                    borderColor: '#1e3f20',
+                                    backgroundColor: 'rgba(30,63,32,0.1)',
+                                    tension: 0.3,
+                                    fill: true
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: { beginAtZero: true, max: 4 }
+                                },
+                                plugins: { legend: { display: false } }
+                            }
+                        });
+                        </script>
                     </div>
 
                     <!-- Past Semesters Grade Sheets -->
-                    <h4 style="color:#1a365d; margin-bottom: 1rem; font-size: 1.1rem;">Semesters Grade Sheet</h4>
+                    <h4 style="color:#1e3f20; margin-bottom: 1rem; font-size: 1.1rem;">Semesters Grade Sheet</h4>
                     
                     <?php 
                     // Loop through semesters and render grade tables

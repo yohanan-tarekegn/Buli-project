@@ -106,9 +106,9 @@ if ($pdo) {
         gap: 2rem;
     }
     .card-title {
-        color: #1a365d;
+        color: #1e3f20;
         margin-bottom: 1.25rem;
-        border-bottom: 2px solid #1a365d;
+        border-bottom: 2px solid #1e3f20;
         padding-bottom: 0.5rem;
         font-size: 1.1rem;
     }

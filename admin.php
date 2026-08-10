@@ -191,7 +191,7 @@ if (!isset($_SESSION['admin_logged_in'])) {
             max-width: 420px;
         }
         .login-card h1 {
-            color: #1a365d;
+            color: #1e3f20;
             font-size: 1.5rem;
             margin-bottom: 0.5rem;
         }
@@ -217,11 +217,11 @@ if (!isset($_SESSION['admin_logged_in'])) {
             border-radius: 4px;
             font-size: 0.95rem;
         }
-        .form-group input:focus { outline: none; border-color: #1a365d; }
+        .form-group input:focus { outline: none; border-color: #1e3f20; }
         .btn-login {
             width: 100%;
             padding: 0.75rem;
-            background-color: #1a365d;
+            background-color: #1e3f20;
             color: #fff;
             border: none;
             border-radius: 4px;
@@ -247,7 +247,7 @@ if (!isset($_SESSION['admin_logged_in'])) {
             font-size: 0.85rem;
             color: #718096;
         }
-        .back-link a { color: #1a365d; }
+        .back-link a { color: #1e3f20; }
     </style>
 </head>
 <body>
@@ -315,18 +315,18 @@ if ($pdo) {
 
         /* -- Top Admin Bar -- */
         .admin-bar {
-            background-color: #1a365d;
+            background-color: #1e3f20;
             color: #fff;
             padding: 0.85rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 3px solid #d69e2e;
+            border-bottom: 3px solid #d4af37;
         }
         .admin-bar h1 { font-size: 1.2rem; }
         .admin-bar .bar-right { display: flex; align-items: center; gap: 1.5rem; font-size: 0.9rem; }
         .admin-bar a { color: #cbd5e0; text-decoration: none; }
-        .admin-bar a:hover { color: #d69e2e; }
+        .admin-bar a:hover { color: #d4af37; }
         .logout-btn {
             background-color: #e53e3e;
             color: #fff;
@@ -353,8 +353,8 @@ if ($pdo) {
         .acct-form .full-width { grid-column: 1 / -1; }
         .acct-form label { display: block; font-size: 0.85rem; font-weight:600; color:#2d3748; margin-bottom:0.3rem; }
         .acct-form input, .acct-form select { width:100%; padding:0.6rem 0.75rem; border:1px solid #cbd5e0; border-radius:4px; font-size:0.9rem; font-family:inherit; }
-        .acct-form input:focus, .acct-form select:focus { outline:none; border-color:#1a365d; }
-        .btn-create { background:#1a365d; color:#fff; padding:0.65rem 1.5rem; border:none; border-radius:4px; font-weight:bold; cursor:pointer; font-size:0.9rem; }
+        .acct-form input:focus, .acct-form select:focus { outline:none; border-color:#1e3f20; }
+        .btn-create { background:#1e3f20; color:#fff; padding:0.65rem 1.5rem; border:none; border-radius:4px; font-weight:bold; cursor:pointer; font-size:0.9rem; }
         .btn-create:hover { background:#2b6cb0; }
         .acct-alert { padding:0.75rem 1rem; border-radius:4px; margin-bottom:1.25rem; font-size:0.9rem; }
         .acct-alert-success { background:#c6f6d5; color:#22543d; border:1px solid #9ae6b4; }
@@ -366,9 +366,9 @@ if ($pdo) {
             padding: 1.25rem;
             text-align: center;
         }
-        .summary-card h2 { font-size: 2rem; color: #1a365d; }
+        .summary-card h2 { font-size: 2rem; color: #1e3f20; }
         .summary-card p { font-size: 0.85rem; color: #718096; margin-top: 0.25rem; }
-        .summary-card.pending h2 { color: #d69e2e; }
+        .summary-card.pending h2 { color: #d4af37; }
         .summary-card.approved h2 { color: #2f855a; }
         .summary-card.rejected h2 { color: #c53030; }
 
@@ -389,11 +389,11 @@ if ($pdo) {
         }
         .tab-btn.active {
             background: #fff;
-            color: #1a365d;
+            color: #1e3f20;
             border-bottom: 2px solid #fff;
             margin-bottom: -2px;
         }
-        .tab-btn:hover { background: #fff; color: #1a365d; }
+        .tab-btn:hover { background: #fff; color: #1e3f20; }
 
         /* -- Table Panel -- */
         .panel {
@@ -404,10 +404,10 @@ if ($pdo) {
         }
         .panel h3 {
             font-size: 1.1rem;
-            color: #1a365d;
+            color: #1e3f20;
             margin-bottom: 1.25rem;
             padding-bottom: 0.5rem;
-            border-bottom: 2px solid #1a365d;
+            border-bottom: 2px solid #1e3f20;
         }
         .empty-msg {
             text-align: center;
@@ -420,7 +420,7 @@ if ($pdo) {
         table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
         th {
             background-color: #edf2f7;
-            color: #1a365d;
+            color: #1e3f20;
             padding: 0.65rem 0.85rem;
             border: 1px solid #cbd5e0;
             text-align: left;
@@ -560,8 +560,8 @@ if ($pdo) {
             <h2><?php echo $summary['total_messages']; ?></h2>
             <p>Messages</p>
         </div>
-        <div class="summary-card" style="border-top:3px solid #1a365d;">
-            <h2 style="color:#1a365d;"><?php echo $summary['total_accounts'] ?? 0; ?></h2>
+        <div class="summary-card" style="border-top:3px solid #1e3f20;">
+            <h2 style="color:#1e3f20;"><?php echo $summary['total_accounts'] ?? 0; ?></h2>
             <p>Student Accounts</p>
         </div>
     </div>
