@@ -41,29 +41,49 @@ $translations = [
         'nav_contact' => 'Contact Us',
         'nav_gallery' => 'Gallery',
         'nav_download' => 'Downloads',
-        'nav_mission' => 'Mission',
+        'nav_mission' => 'Mission & Vision',
         'nav_history' => 'History & Profile',
-        'nav_studentservice' => 'Students service',
+        'nav_studentservice' => 'Student Services',
+        'nav_innovation' => 'Innovation & Extension',
+        'nav_offices' => 'Offices & Directorates',
+        'nav_incubation' => 'Incubation Center',
+        'nav_production' => 'Production Unit (WBL)',
         
-        // General text
+        // General text & CTA Buttons
         'btn_read_more' => 'Read More',
-        'btn_apply' => 'Apply Now',
+        'btn_apply' => 'Apply Online',
         'btn_submit' => 'Submit',
         'btn_send' => 'Send Message',
+        'btn_explore' => 'Explore Program',
+        'btn_visit' => 'Visit Hub',
         
-        // Home page
+        // Home page & Benchmark Pillars
         'hero_title' => 'Welcome to Major General Mulugeta Buli Polytechnic College',
-        'hero_desc' => 'Ethiopia’s leading institution dedicated to producing competent graduates in science, technology, and vocational training.',
+        'hero_desc' => 'Empowering youth through high-quality technical and vocational training, technological innovation, and industry-oriented production.',
         'announcements' => 'Announcements & Notice Board',
-        'latest_news' => 'Latest News & Updates',
+        'latest_news' => 'Latest News & Events',
         'upcoming_events' => 'Upcoming Events',
         'quick_links' => 'Quick Links',
+        'core_pillars' => 'Core Institutional Pillars',
+        'tvet_training_title' => 'Technical & Vocational Training',
+        'tvet_training_desc' => 'Offering market-driven TVET Level I to V certification and short-term capacity building courses.',
+        'incubation_title' => 'Incubation & Startup Hub',
+        'incubation_desc' => 'Nurturing student innovations, prototypes, and technical entrepreneurship in engineering & ICT.',
+        'production_title' => 'Production & Trade Unit',
+        'production_desc' => 'Work-Based Learning (WBL) production center offering commercial and community technical services.',
+        'departments_title' => 'Academic Departments',
+        'testimonials_title' => 'Student & Trainee Testimonials',
+        'partners_title' => 'Our Key Partners & Collaborators',
         
-        // About page
+        // About & Offices
         'about_title' => 'About Our College',
         'mission' => 'Mission',
         'vision' => 'Vision',
         'core_values' => 'Core Values',
+        'offices_title' => 'Institutional Leadership & Directorates',
+        'dean_office' => 'Office of the Dean',
+        'vice_deans' => 'Vice Deans',
+        'directorates' => 'Directorates & Administration',
         
         // Contact page
         'contact_title' => 'Contact Us',
@@ -91,29 +111,49 @@ $translations = [
         'nav_contact' => 'አድራሻችን',
         'nav_gallery' => 'ማዕከለ-ስዕላት',
         'nav_download' => 'ማውረጃዎች',
-        'nav_mission' => 'ተልዕኮ',
+        'nav_mission' => 'ተልዕኮ እና ራዕይ',
         'nav_history' => 'ታሪክ እና መግለጫ',
         'nav_studentservice' => 'የተማሪዎች አገልግሎት',
+        'nav_innovation' => 'ኢኖቬሽን እና ኢንዱስትሪ ሽግግር',
+        'nav_offices' => 'ቢሮዎች እና ዳይሬክቶሬቶች',
+        'nav_incubation' => 'የፈጠራ ማዕከል',
+        'nav_production' => 'የምርት ማዕከል (WBL)',
         
-        // General text
+        // General text & CTA Buttons
         'btn_read_more' => 'ተጨማሪ ያንብቡ',
-        'btn_apply' => 'አሁን ያመልክቱ',
+        'btn_apply' => 'በኦንላይን ያመልክቱ',
         'btn_submit' => 'አስገባ',
         'btn_send' => 'መልዕክት ላክ',
+        'btn_explore' => 'ክፍሉን ይጎብኙ',
+        'btn_visit' => 'ማዕከሉን ይጎብኙ',
         
-        // Home page
+        // Home page & Benchmark Pillars
         'hero_title' => 'እንኳን ወደ ሜጀር ጄኔራል ሙሉጌታ ቡሊ ፖሊቴክኒክ ኮሌጅ በደህና መጡ',
-        'hero_desc' => 'በሳይንስ፣ ቴክኖሎጂ እና በሙያ ስልጠና ብቁ የሆኑ ተመራቂዎችን ለማፍራት የተቋቋመ የኢትዮጵያ መሪ ተቋም።',
+        'hero_desc' => 'ወጣቶችን በከፍተኛ የቴክኒክ እና ሙያ ስልጠና፣ በቴክኖሎጂ ፈጠራ እና በምርት ስራዎች ማብቃት።',
         'announcements' => 'ማስታወቂያዎች እና የማስታወቂያ ሰሌዳ',
-        'latest_news' => 'የቅርብ ጊዜ ዜናዎች',
+        'latest_news' => 'የቅርብ ጊዜ ዜናዎች እና ሁነቶች',
         'upcoming_events' => 'የሚመጡ ሁነቶች',
         'quick_links' => 'ፈጣን ሊንኮች',
+        'core_pillars' => 'የኮሌጁ ዋና ዋና ዘበኞች',
+        'tvet_training_title' => 'የቴክኒክ እና ሙያ ስልጠና',
+        'tvet_training_desc' => 'ከደረጃ 1 እስከ 5 የመደበኛ እና የአጭር ጊዜ የክህሎት ማሻሻያ ስልጠናዎች።',
+        'incubation_title' => 'የቴክኖሎጂ እና የፈጠራ ማዕከል',
+        'incubation_desc' => 'የተማሪዎችን የፈጠራ ስራዎች እና የቴክኖሎጂ ስራ ፈጠራ ፕሮጀክቶችን ማበልፀጊያ።',
+        'production_title' => 'የምርት እና የአገልግሎት ማዕከል',
+        'production_desc' => 'በተግባር ላይ የተመሰረተ (WBL) የዕቃ ምርት እና የማህበረሰብ ቴክኒክ አገልግሎቶች።',
+        'departments_title' => 'የስልጠና ክፍሎች',
+        'testimonials_title' => 'የተማሪዎች እና ሰልጣኞች አስተያየት',
+        'partners_title' => 'የስልታዊ አጋሮቻችን',
         
-        // About page
+        // About & Offices
         'about_title' => 'ስለ ኮሌጃችን',
         'mission' => 'ተልዕኮ',
         'vision' => 'ራዕይ',
         'core_values' => 'ዕሴቶች',
+        'offices_title' => 'የኮሌጁ አመራር እና ዳይሬክቶሬቶች',
+        'dean_office' => 'የዲን ጽህፈት ቤት',
+        'vice_deans' => 'ምክትል ዲኖች',
+        'directorates' => 'ዳይሬክቶሬቶች',
         
         // Contact page
         'contact_title' => 'ያግኙን',
@@ -125,6 +165,7 @@ $translations = [
         'message_label' => 'መልዕክት'
     ]
 ];
+
 
 // Translation Helper function
 function __($key) {
