@@ -5,26 +5,96 @@
 document.addEventListener('DOMContentLoaded', function() {
     
     // ----------------------------------------------------
-    // 1. Mobile Menu Toggling
+    // 1. Sticky Header Compression on Scroll
+    // ----------------------------------------------------
+    const mainHeader = document.getElementById('mainHeader');
+    
+    function handleHeaderScroll() {
+        if (!mainHeader) return;
+        if (window.scrollY > 30) {
+            mainHeader.classList.add('header-scrolled');
+        } else {
+            mainHeader.classList.remove('header-scrolled');
+        }
+    }
+    
+    window.addEventListener('scroll', handleHeaderScroll, { passive: true });
+    handleHeaderScroll();
+
+    // ----------------------------------------------------
+    // 2. Off-Canvas Mobile Drawer Toggling
     // ----------------------------------------------------
     const navToggle = document.getElementById('navToggle');
-    const navbar = document.getElementById('navbar');
-    
-    if (navToggle && navbar) {
-        navToggle.addEventListener('click', function() {
-            navbar.classList.toggle('show');
-            // Toggle hamburger cross state if needed, here we just show the menu
-            navToggle.classList.toggle('active');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    const mobileDrawerOverlay = document.getElementById('mobileDrawerOverlay');
+    const mobileDrawerClose = document.getElementById('mobileDrawerClose');
+
+    function openMobileDrawer() {
+        if (mobileDrawer && mobileDrawerOverlay && navToggle) {
+            mobileDrawer.classList.add('open');
+            mobileDrawerOverlay.classList.add('open');
+            navToggle.classList.add('active');
+            navToggle.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden'; // Lock scroll
+        }
+    }
+
+    function closeMobileDrawer() {
+        if (mobileDrawer && mobileDrawerOverlay && navToggle) {
+            mobileDrawer.classList.remove('open');
+            mobileDrawerOverlay.classList.remove('open');
+            navToggle.classList.remove('active');
+            navToggle.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = ''; // Unlock scroll
+        }
+    }
+
+    if (navToggle) {
+        navToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (mobileDrawer && mobileDrawer.classList.contains('open')) {
+                closeMobileDrawer();
+            } else {
+                openMobileDrawer();
+            }
         });
     }
 
-    // Close menu when clicking outside on mobile
-    document.addEventListener('click', function(event) {
-        if (navbar && navbar.classList.contains('show') && navToggle) {
-            if (!navbar.contains(event.target) && !navToggle.contains(event.target)) {
-                navbar.classList.remove('show');
-                navToggle.classList.remove('active');
+    if (mobileDrawerClose) {
+        mobileDrawerClose.addEventListener('click', closeMobileDrawer);
+    }
+
+    if (mobileDrawerOverlay) {
+        mobileDrawerOverlay.addEventListener('click', closeMobileDrawer);
+    }
+
+    // ----------------------------------------------------
+    // 3. Mobile Accordion Sub-Menu Toggling
+    // ----------------------------------------------------
+    const accordionToggles = document.querySelectorAll('.mobile-accordion-toggle');
+    accordionToggles.forEach(function(toggleBtn) {
+        toggleBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const parentDropdown = this.closest('.mobile-dropdown');
+            if (parentDropdown) {
+                const isOpen = parentDropdown.classList.contains('open');
+                
+                // Close other open submenus for clean accordion effect
+                document.querySelectorAll('.mobile-dropdown.open').forEach(item => {
+                    if (item !== parentDropdown) item.classList.remove('open');
+                });
+
+                parentDropdown.classList.toggle('open', !isOpen);
+                this.textContent = isOpen ? '▾' : '▴';
             }
+        });
+    });
+
+    // Close mobile drawer when pressing Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && mobileDrawer && mobileDrawer.classList.contains('open')) {
+            closeMobileDrawer();
         }
     });
 

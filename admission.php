@@ -570,6 +570,94 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     updateWizardUI();
 </script>
 
-<?php
-require_once __DIR__ . '/includes/footer.php';
-?>
+
+<!-- ===================================================
+     TRAINING FEES TABLE (AATPTC Benchmark)
+     =================================================== -->
+<section class="card" style="margin-bottom:2.5rem;margin-top:2rem;">
+    <h3>&#128176; Training Fees Overview</h3>
+    <p style="margin-bottom:1.25rem;font-size:.9rem;color:#4a5568;">Fees are set per academic semester and vary by program level and mode of study. All fees are indicative and subject to approval by the Oromia TVET Bureau.</p>
+    <div class="table-responsive">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Program Category</th>
+                    <th>NTQF Level</th>
+                    <th>Mode</th>
+                    <th>Semester Fee (ETB)</th>
+                    <th>Note</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $fees = [
+                    ['TVET (Technical Dept.)','Level I – II','Regular','Free (Gov. Sponsored)','Zero tuition for qualified trainees'],
+                    ['TVET (Technical Dept.)','Level III – V','Regular','500 – 800','Materials &amp; assessment fee only'],
+                    ['TVET (Technical Dept.)','Level III – V','Extension','1,200 – 1,500','Evening/Weekend program'],
+                    ['TVET (Business Dept.)','Level II – V','Regular','Free – 600','Varies by specialization'],
+                    ['Short-Term Courses','N/A','Flexible','800 – 2,500','Per course; materials included'],
+                    ['COC Assessment','All Levels','Exam Only','150 – 300','Competency verification fee'],
+                    ['Summer Program','All Levels','Summer','600 – 1,000','Per session, in-service only'],
+                ];
+                foreach ($fees as $f): ?>
+                <tr>
+                    <td><strong><?php echo $f[0]; ?></strong></td>
+                    <td><?php echo $f[1]; ?></td>
+                    <td><?php echo $f[2]; ?></td>
+                    <td style="font-weight:700;color:var(--primary-color);"><?php echo $f[3]; ?></td>
+                    <td style="font-size:.82rem;color:#718096;"><?php echo $f[4]; ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <p style="font-size:.8rem;color:#718096;margin-top:.75rem;"><em>* Fee waivers are available for marginalized communities. Contact the Registrar's Office for details.</em></p>
+</section>
+
+<!-- ===================================================
+     ACADEMIC CALENDAR (AATPTC Benchmark)
+     =================================================== -->
+<section class="card" style="margin-bottom:2.5rem;">
+    <h3>&#128197; Academic Calendar 2026/2027 (2018/2019 E.C.)</h3>
+    <p style="margin-bottom:1.25rem;font-size:.9rem;color:#4a5568;">Key dates and milestones for the upcoming academic year across all programs.</p>
+    <div class="table-responsive">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Activity</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Applies To</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $calendar = [
+                    ['New Student Registration (Regular)', 'Sep 01, 2026', 'Sep 15, 2026', 'All Regular Programs'],
+                    ['Semester I Classes Begin', 'Sep 22, 2026', '—', 'All Programs'],
+                    ['Extension Program Registration', 'Sep 15, 2026', 'Sep 25, 2026', 'Extension Mode Trainees'],
+                    ['Mid-Semester Assessment (Sem. I)', 'Nov 10, 2026', 'Nov 20, 2026', 'All Programs'],
+                    ['Semester I Final Exams', 'Jan 05, 2027', 'Jan 22, 2027', 'All Programs'],
+                    ['COC Practical Assessments', 'Jan 25, 2027', 'Feb 10, 2027', 'Level III, IV, V'],
+                    ['Semester I Break', 'Jan 23, 2027', 'Feb 14, 2027', 'Regular Students'],
+                    ['Semester II Registration', 'Feb 15, 2027', 'Feb 25, 2027', 'Continuing Students'],
+                    ['Semester II Classes Begin', 'Mar 01, 2027', '—', 'All Programs'],
+                    ['Summer / Short-Course Intake', 'Jun 15, 2027', 'Jun 25, 2027', 'Short-Term &amp; In-Service'],
+                    ['Annual Graduation Ceremony', 'Jul 2027', '—', 'Level IV &amp; V Graduates'],
+                ];
+                foreach ($calendar as $c): ?>
+                <tr>
+                    <td><strong><?php echo $c[0]; ?></strong></td>
+                    <td style="color:var(--primary-color);font-weight:600;"><?php echo $c[1]; ?></td>
+                    <td><?php echo $c[2]; ?></td>
+                    <td style="font-size:.85rem;color:#4a5568;"><?php echo $c[3]; ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <p style="font-size:.8rem;color:#718096;margin-top:.75rem;"><em>* Calendar dates are subject to official gazette updates by the Oromia Education Bureau.</em></p>
+</section>
+
+<?php require_once __DIR__ . '/includes/footer.php'; ?>
+
